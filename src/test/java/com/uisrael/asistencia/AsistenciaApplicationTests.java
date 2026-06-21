@@ -1,5 +1,6 @@
 package com.uisrael.asistencia;
 
+
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,13 +15,16 @@ import com.uisrael.asistencia.infraestructura.persistencia.jpa.CodigosTemporales
 import com.uisrael.asistencia.infraestructura.persistencia.jpa.EmpleadoEntity;
 import com.uisrael.asistencia.infraestructura.persistencia.jpa.EmpleadoHorarioEntity;
 import com.uisrael.asistencia.infraestructura.persistencia.jpa.HorariosEntity;
+import com.uisrael.asistencia.infraestructura.persistencia.jpa.MarcacionesEntity;
 import com.uisrael.asistencia.infraestructura.persistencia.jpa.ReporteDiarioEntity;
 import com.uisrael.asistencia.infraestructura.persistencia.jpa.RolEntity;
+import com.uisrael.asistencia.infraestructura.persistencia.jpa.UbicacionEntity;
 import com.uisrael.asistencia.infraestructura.repositorios.IAuditoriaRepositorio;
 import com.uisrael.asistencia.infraestructura.repositorios.ICodigosTemporalesRepositorio;
 import com.uisrael.asistencia.infraestructura.repositorios.IEmpleadoHorarioRepositorio;
 import com.uisrael.asistencia.infraestructura.repositorios.IEmpleadoRepositorio;
 import com.uisrael.asistencia.infraestructura.repositorios.IHorariosRepositorio;
+import com.uisrael.asistencia.infraestructura.repositorios.IMarcacionesRepositorio;
 import com.uisrael.asistencia.infraestructura.repositorios.IReporteDiarioRepositorio;
 import com.uisrael.asistencia.infraestructura.repositorios.IRolRepositorio;
 
@@ -41,10 +45,12 @@ class AsistenciaApplicationTests {
 	IReporteDiarioRepositorio repoReporte;
 	@Autowired
 	IAuditoriaRepositorio repoAuditoria;
+	@Autowired
+	IMarcacionesRepositorio repoMercaciones;
 	
 	@Test
 	void contextLoads() {
-		
+		// **Empleado
 		EmpleadoEntity nuevoEmp = new EmpleadoEntity();
 		nuevoEmp.setNombreEmpleado("Alexander");
 		nuevoEmp.setApellidosEmpleado("Mejia Cevallos");
@@ -54,7 +60,7 @@ class AsistenciaApplicationTests {
 		
 		System.out.println(nuevoEmp.getNombreEmpleado()+" "+nuevoEmp.getApellidosEmpleado()+" "+nuevoEmp.getCorreoEmpleado()+" "+nuevoEmp.getContrasenaEmpleado());
 		
-		//HORARIOS
+		// **HORARIOS
 		HorariosEntity nuevoHora = new HorariosEntity();
 		nuevoHora.setNombre("Horario Matutino");
 		nuevoHora.setHoraEntrada(LocalTime.parse("08:00"));
@@ -65,7 +71,7 @@ class AsistenciaApplicationTests {
 		
 		System.out.println(nuevoHora.getNombre()+" "+nuevoHora.getHoraEntrada()+" "+nuevoHora.getHoraSalida()+" "+nuevoHora.getToleranciaMinutos()+" "+nuevoHora.isEstadoHorario());
 		
-		//Codigos temporales
+		// **Codigos temporales
 		CodigosTemporalesEntity nuevoCodigo = new CodigosTemporalesEntity();
 		nuevoCodigo.setCodigo("ABC123");
 		nuevoCodigo.setTipo("ENTRADA");
@@ -76,7 +82,7 @@ class AsistenciaApplicationTests {
 		
 		System.out.println(nuevoCodigo.getCodigo()+" "+nuevoCodigo.getTipo()+" "+nuevoCodigo.getGeneradoEn()+" "+nuevoCodigo.getExpiraEn()+" "+nuevoCodigo.isUsado());
 		
-		//EMPLEADO HORARIO
+		// **EMPLEADO HORARIO
 		EmpleadoHorarioEntity nuevaAsignacion = new EmpleadoHorarioEntity();
 		nuevaAsignacion.setIdEmpleado(1);
 		nuevaAsignacion.setIdHorario(1);
@@ -87,7 +93,7 @@ class AsistenciaApplicationTests {
 		
 		System.out.println(nuevaAsignacion.getIdEmpleado()+" "+nuevaAsignacion.getIdHorario()+" "+nuevaAsignacion.getFechaInicio()+" "+nuevaAsignacion.getFechaFin()+" "+nuevaAsignacion.isEstadoEmpleadoHorario());
 		
-		//Rol 
+		// **Rol 
 		RolEntity nuevoRol = new RolEntity();
 		nuevoRol.setNombre("Administrador");
 		nuevoRol.setDescripcion("Acceso total al sistema");
@@ -96,7 +102,7 @@ class AsistenciaApplicationTests {
 		
 		System.out.println(nuevoRol.getNombre()+" "+nuevoRol.getDescripcion()+" "+nuevoRol.getCreadoRol());
 		
-		//Reporte Diario
+		// **Reporte Diario
 		ReporteDiarioEntity nuevoReporte = new ReporteDiarioEntity();
 		nuevoReporte.setIdEmpelado(1);
 		nuevoReporte.setFechaReporte(LocalDate.now());
@@ -109,7 +115,7 @@ class AsistenciaApplicationTests {
 		
 		System.out.println(nuevoReporte.getIdEmpelado()+" "+nuevoReporte.getFechaReporte()+" "+nuevoReporte.getHoraEntrada()+" "+nuevoReporte.getHoraSalida()+" "+nuevoReporte.isTardanzaReporte());
 		
-		//Auditoria
+		// **Auditoria
 		AuditoriaEntity nuevaAuditoria = new AuditoriaEntity();
 		nuevaAuditoria.setIdEmpleado(1);
 		nuevaAuditoria.setAccion("Insert");
@@ -121,6 +127,26 @@ class AsistenciaApplicationTests {
 		repoAuditoria.save(nuevaAuditoria);
 		
 		System.out.println(nuevaAuditoria.getAccion()+" "+nuevaAuditoria.getTablaAfectada()+" "+nuevaAuditoria.getDetalle()+" "+nuevaAuditoria.getFechaHora());
+		
+		// **Marcaciones
+		MarcacionesEntity nuevaMarc = new MarcacionesEntity();
+		nuevaMarc.setTipo("Insert");
+		nuevaMarc.setFechaMarcacion(LocalDate.now());
+		nuevaMarc.setHoraMarcacion(LocalTime.now());
+		nuevaMarc.setLatitud(0);
+		nuevaMarc.setLongitud(0);
+		nuevaMarc.setDentroHorario(false);
+		nuevaMarc.setDentroRango(false);
+		nuevaMarc.setValida(true);
+		nuevaMarc.setObservacion("Hora Valida De Timbrada");
+		
+		// **Ubicacion
+		UbicacionEntity nuevaUbi = new UbicacionEntity();
+		nuevaUbi.setNombreUbicacion(null);
+		nuevaUbi.setLongitudUbicacion(0);
+		nuevaUbi.setLatitudUbicacion(0);
+		nuevaUbi.setRadioMetrosUbicacion(0);
+		nuevaUbi.setEstadoUbicacion(false);
 		
 	}
 
