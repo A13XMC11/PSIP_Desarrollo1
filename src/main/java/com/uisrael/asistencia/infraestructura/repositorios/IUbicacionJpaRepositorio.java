@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.uisrael.asistencia.infraestructura.persistencia.jpa.UbicacionEntity;
 
-public interface IUbicacionRepositorio extends JpaRepository<UbicacionEntity, Integer>{
+public interface IUbicacionJpaRepositorio extends JpaRepository<UbicacionEntity, Integer>{
 
 }

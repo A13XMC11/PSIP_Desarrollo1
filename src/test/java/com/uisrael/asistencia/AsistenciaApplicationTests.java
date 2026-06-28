@@ -22,9 +22,9 @@ import com.uisrael.asistencia.infraestructura.persistencia.jpa.UbicacionEntity;
 import com.uisrael.asistencia.infraestructura.repositorios.IAuditoriaRepositorio;
 import com.uisrael.asistencia.infraestructura.repositorios.ICodigosTemporalesRepositorio;
 import com.uisrael.asistencia.infraestructura.repositorios.IEmpleadoHorarioRepositorio;
-import com.uisrael.asistencia.infraestructura.repositorios.IEmpleadoRepositorio;
+import com.uisrael.asistencia.infraestructura.repositorios.IEmpleadoJpaRepositorio;
 import com.uisrael.asistencia.infraestructura.repositorios.IHorariosRepositorio;
-import com.uisrael.asistencia.infraestructura.repositorios.IMarcacionesRepositorio;
+import com.uisrael.asistencia.infraestructura.repositorios.IMarcacionesJpaRepositorio;
 import com.uisrael.asistencia.infraestructura.repositorios.IReporteDiarioRepositorio;
 import com.uisrael.asistencia.infraestructura.repositorios.IRolRepositorio;
 
@@ -32,7 +32,7 @@ import com.uisrael.asistencia.infraestructura.repositorios.IRolRepositorio;
 class AsistenciaApplicationTests {
 	
 	@Autowired
-	IEmpleadoRepositorio repoEmpleado;
+	IEmpleadoJpaRepositorio repoEmpleado;
 	@Autowired 
 	IHorariosRepositorio repoHorario;
 	@Autowired
@@ -46,7 +46,7 @@ class AsistenciaApplicationTests {
 	@Autowired
 	IAuditoriaRepositorio repoAuditoria;
 	@Autowired
-	IMarcacionesRepositorio repoMercaciones;
+	IMarcacionesJpaRepositorio repoMercaciones;
 	
 	@Test
 	void contextLoads() {
