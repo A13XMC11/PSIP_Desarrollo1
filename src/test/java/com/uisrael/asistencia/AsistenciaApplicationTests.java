@@ -135,8 +135,8 @@ class AsistenciaApplicationTests {
 		nuevaMarc.setHoraMarcacion(LocalTime.now());
 		nuevaMarc.setLatitud(0);
 		nuevaMarc.setLongitud(0);
-		nuevaMarc.setDentroHorario(false);
-		nuevaMarc.setDentroRango(false);
+		nuevaMarc.setDentroHorario(true);
+		nuevaMarc.setDentroRango(true);
 		nuevaMarc.setValida(true);
 		nuevaMarc.setObservacion("Hora Valida De Timbrada");
 		
