@@ -3,24 +3,43 @@ package com.uisrael.asistencia.infraestructura.configuracion;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.uisrael.asistencia.aplicacion.casosuso.entrada.IAuditoriaUseCase;
 import com.uisrael.asistencia.aplicacion.casosuso.entrada.ICodigosTemporalesUseCase;
 import com.uisrael.asistencia.aplicacion.casosuso.entrada.IEmpleadoHorarioUseCase;
 import com.uisrael.asistencia.aplicacion.casosuso.entrada.IHorariosUseCase;
+import com.uisrael.asistencia.aplicacion.casosuso.entrada.IReporteDiarioUseCase;
+import com.uisrael.asistencia.aplicacion.casosuso.entrada.IRolUseCase;
+import com.uisrael.asistencia.aplicacion.casosuso.impl.AuditoriaUseCaseImpl;
 import com.uisrael.asistencia.aplicacion.casosuso.impl.CodigosTemporalesUseCaseImpl;
 import com.uisrael.asistencia.aplicacion.casosuso.impl.EmpleadoHorarioUseCaseImpl;
 import com.uisrael.asistencia.aplicacion.casosuso.impl.HorariosUseCaseImpl;
+import com.uisrael.asistencia.aplicacion.casosuso.impl.ReporteDiarioUseCaseImpl;
+import com.uisrael.asistencia.aplicacion.casosuso.impl.RolUseCaseImpl;
+import com.uisrael.asistencia.dominio.repositorio.IAuditoriaRepositorio;
 import com.uisrael.asistencia.dominio.repositorio.ICodigosTemporalesRepositorio;
 import com.uisrael.asistencia.dominio.repositorio.IEmpleadoHorarioRepositorio;
 import com.uisrael.asistencia.dominio.repositorio.IHorariosRepositorio;
+import com.uisrael.asistencia.dominio.repositorio.IReporteDiarioRepositorio;
+import com.uisrael.asistencia.dominio.repositorio.IRolRepositorio;
+import com.uisrael.asistencia.infraestructura.persistencia.adaptadores.AuditoriaRepositorioImpl;
 import com.uisrael.asistencia.infraestructura.persistencia.adaptadores.CodigosTempralesRepositorioImpl;
 import com.uisrael.asistencia.infraestructura.persistencia.adaptadores.EmpleadoHorarioRepositorioImpl;
 import com.uisrael.asistencia.infraestructura.persistencia.adaptadores.HorariosRepositorioImpl;
+import com.uisrael.asistencia.infraestructura.persistencia.adaptadores.ReporteDiarioRepositorioImpl;
+import com.uisrael.asistencia.infraestructura.persistencia.adaptadores.RolRepositorioImpl;
+import com.uisrael.asistencia.infraestructura.persistencia.mapeadores.IAuditoriaJpaMapper;
 import com.uisrael.asistencia.infraestructura.persistencia.mapeadores.ICodigosTemporalesJpaMapper;
 import com.uisrael.asistencia.infraestructura.persistencia.mapeadores.IEmpleadoHorarioJpaMapper;
 import com.uisrael.asistencia.infraestructura.persistencia.mapeadores.IHorariosJpaMapper;
+import com.uisrael.asistencia.infraestructura.persistencia.mapeadores.IReporteDiarioJpaMapper;
+import com.uisrael.asistencia.infraestructura.persistencia.mapeadores.IRolJpaMapper;
+import com.uisrael.asistencia.infraestructura.repositorios.IAuditoriaJpaRepositorio;
 import com.uisrael.asistencia.infraestructura.repositorios.ICodigosTemporalesJpaRepositorio;
 import com.uisrael.asistencia.infraestructura.repositorios.IEmpleadoHorarioJpaRepositorio;
 import com.uisrael.asistencia.infraestructura.repositorios.IHorariosJpaRepositorio;
+import com.uisrael.asistencia.infraestructura.repositorios.IReporteDiarioJpaRepositorio;
+import com.uisrael.asistencia.infraestructura.repositorios.IRolJpaRepositorio;
+
 
 @Configuration
 public class AsistenciaConfig {
@@ -56,4 +75,38 @@ public class AsistenciaConfig {
 	IEmpleadoHorarioUseCase empleadoHorarioUseCase(IEmpleadoHorarioRepositorio repo) {
 		return new EmpleadoHorarioUseCaseImpl(repo);
 	}
+	
+	/*Auditoria*/
+	@Bean
+	IAuditoriaRepositorio auditoriaRepositorio(IAuditoriaJpaRepositorio jpaRepositorio, IAuditoriaJpaMapper mapper) {
+		return new AuditoriaRepositorioImpl(jpaRepositorio, mapper);
+	}
+	
+	@Bean
+	IAuditoriaUseCase auditoriaUseCase(IAuditoriaRepositorio repo) {
+		return new AuditoriaUseCaseImpl(repo);
+	}
+	
+	/*ReporteDiario*/
+	@Bean
+	IReporteDiarioRepositorio reporteDiarioRepositorio(IReporteDiarioJpaRepositorio jpaRepositorio, IReporteDiarioJpaMapper mapper) {
+		return new ReporteDiarioRepositorioImpl(jpaRepositorio, mapper);
+	}
+	
+	@Bean
+	IReporteDiarioUseCase reporteDiarioUseCase(IReporteDiarioRepositorio repo) {
+		return new ReporteDiarioUseCaseImpl(repo);
+	}
+	
+	/*Rol*/
+	@Bean
+	IRolRepositorio rolRepositorio(IRolJpaRepositorio jpaRepositorio, IRolJpaMapper mapper) {
+		return new RolRepositorioImpl(jpaRepositorio, mapper);
+	}
+	
+	@Bean
+	IRolUseCase rolUseCase(IRolRepositorio repo) {
+		return new RolUseCaseImpl(repo);
+	}
+	
 }
