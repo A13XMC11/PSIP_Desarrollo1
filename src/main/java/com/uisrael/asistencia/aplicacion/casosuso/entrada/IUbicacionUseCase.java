@@ -1,7 +1,6 @@
 package com.uisrael.asistencia.aplicacion.casosuso.entrada;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.uisrael.asistencia.dominio.entidades.Ubicacion;
 

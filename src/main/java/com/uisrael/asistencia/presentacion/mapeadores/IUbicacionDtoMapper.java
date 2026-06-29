@@ -7,5 +7,5 @@ import com.uisrael.asistencia.presentacion.dto.response.UbicacionResponseDto;
 public interface IUbicacionDtoMapper {
 	Ubicacion toDomain(UbicacionRequestDto dto);
 
-	UbicacionResponseDto toResponseDto(Ubicacion ubicacionDto);
+	UbicacionResponseDto toResponseDto(Ubicacion ubicacionPojo);
 }

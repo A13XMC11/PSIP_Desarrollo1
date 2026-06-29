@@ -8,5 +8,5 @@ public interface IMarcacionesDtoMapper {
 	
 	Marcaciones toDomain(MarcacionesRequestDto dto);
 
-	MarcacionesResponseDto toRespnseDto(Marcaciones marcacionesDto);
+	MarcacionesResponseDto toRespnseDto(Marcaciones marcacionesPojo);
 }

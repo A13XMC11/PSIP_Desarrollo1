@@ -11,5 +11,5 @@ public interface IEmpleadoDtoMapper {
 
 	Empleado toDomain(EmpleadoRequestDto dto);
 
-	EmpleadoResponseDto toResponseDto(Empleado empleadoDto);
+	EmpleadoResponseDto toResponseDto(Empleado empleadoPojo);
 }

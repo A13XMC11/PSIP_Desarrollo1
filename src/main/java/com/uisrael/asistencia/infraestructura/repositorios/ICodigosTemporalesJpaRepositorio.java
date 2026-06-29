@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.uisrael.asistencia.infraestructura.persistencia.jpa.CodigosTemporalesEntity;
 
-public interface ICodigosTemporalesRepositorio extends JpaRepository<CodigosTemporalesEntity, Integer>{
+public interface ICodigosTemporalesJpaRepositorio extends JpaRepository<CodigosTemporalesEntity, Integer>{
 
 }

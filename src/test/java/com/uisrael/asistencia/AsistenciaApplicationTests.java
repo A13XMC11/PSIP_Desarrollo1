@@ -20,10 +20,10 @@ import com.uisrael.asistencia.infraestructura.persistencia.jpa.ReporteDiarioEnti
 import com.uisrael.asistencia.infraestructura.persistencia.jpa.RolEntity;
 import com.uisrael.asistencia.infraestructura.persistencia.jpa.UbicacionEntity;
 import com.uisrael.asistencia.infraestructura.repositorios.IAuditoriaRepositorio;
-import com.uisrael.asistencia.infraestructura.repositorios.ICodigosTemporalesRepositorio;
-import com.uisrael.asistencia.infraestructura.repositorios.IEmpleadoHorarioRepositorio;
+import com.uisrael.asistencia.infraestructura.repositorios.ICodigosTemporalesJpaRepositorio;
+import com.uisrael.asistencia.infraestructura.repositorios.IEmpleadoHorarioJpaRepositorio;
 import com.uisrael.asistencia.infraestructura.repositorios.IEmpleadoJpaRepositorio;
-import com.uisrael.asistencia.infraestructura.repositorios.IHorariosRepositorio;
+import com.uisrael.asistencia.infraestructura.repositorios.IHorariosJpaRepositorio;
 import com.uisrael.asistencia.infraestructura.repositorios.IMarcacionesJpaRepositorio;
 import com.uisrael.asistencia.infraestructura.repositorios.IReporteDiarioRepositorio;
 import com.uisrael.asistencia.infraestructura.repositorios.IRolRepositorio;
@@ -34,11 +34,11 @@ class AsistenciaApplicationTests {
 	@Autowired
 	IEmpleadoJpaRepositorio repoEmpleado;
 	@Autowired 
-	IHorariosRepositorio repoHorario;
+	IHorariosJpaRepositorio repoHorario;
 	@Autowired
-	ICodigosTemporalesRepositorio repoCodigoTemporal;
+	ICodigosTemporalesJpaRepositorio repoCodigoTemporal;
 	@Autowired
-	IEmpleadoHorarioRepositorio repoEmpleadoHorario;
+	IEmpleadoHorarioJpaRepositorio repoEmpleadoHorario;
 	@Autowired
 	IRolRepositorio repoRol;
 	@Autowired
