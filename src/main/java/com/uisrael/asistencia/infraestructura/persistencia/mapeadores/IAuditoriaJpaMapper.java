@@ -12,3 +12,4 @@ public interface IAuditoriaJpaMapper {
 	
 	AuditoriaEntity toEntity(Auditoria auditoriaPojo);
 }
+

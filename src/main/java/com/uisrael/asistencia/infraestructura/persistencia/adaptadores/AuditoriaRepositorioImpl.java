@@ -28,7 +28,7 @@ public class AuditoriaRepositorioImpl implements IAuditoriaRepositorio {
 	}
 
 	@Override
-	public Optional<Auditoria> buscarPorId(int idAuditoria) {
+	public Optional<Auditoria> buscarPorId(Long idAuditoria) {
 		return jpaRepositorio.findById(idAuditoria).map(entityMapper::toDomain);
 	}
 
@@ -38,7 +38,7 @@ public class AuditoriaRepositorioImpl implements IAuditoriaRepositorio {
 	}
 
 	@Override
-	public void eliminar(int idAuditoria) {
+	public void eliminar(Long idAuditoria) {
 		// TODO Auto-generated method stub
 		jpaRepositorio.deleteById(idAuditoria);
 	}

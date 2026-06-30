@@ -9,9 +9,9 @@ public interface IAuditoriaRepositorio {
 
 	Auditoria guardar(Auditoria nuevaAuditoria);
 
-	Optional<Auditoria> buscarPorId(int idAuditoria);
+	Optional<Auditoria> buscarPorId(Long idAuditoria);
 
 	List<Auditoria> listarTodos();
 
-	void eliminar(int idAuditoria);
+	void eliminar(Long idAuditoria);
 }

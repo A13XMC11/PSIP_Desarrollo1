@@ -9,10 +9,10 @@ public interface IAuditoriaUseCase {
 	
 	Auditoria guardar(Auditoria nuevaAuditoria);
 
-	Auditoria buscarPorId(int idAuditoria);
+	Auditoria buscarPorId(Long idAuditoria);
 
 	List<Auditoria> listarTodos();
 
-	void eliminar(int idAuditoria);
+	void eliminar(Long idAuditoria);
 
 }

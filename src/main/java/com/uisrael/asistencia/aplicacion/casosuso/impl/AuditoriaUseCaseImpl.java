@@ -23,7 +23,7 @@ public class AuditoriaUseCaseImpl implements IAuditoriaUseCase{
 	}
 
 	@Override
-	public Auditoria buscarPorId(int idAuditoria) {
+	public Auditoria buscarPorId(Long idAuditoria) {
 		return repositorio.buscarPorId(idAuditoria)
 				.orElseThrow(() -> new RuntimeException("No se encontro Auditoria"));
 	}
@@ -34,7 +34,7 @@ public class AuditoriaUseCaseImpl implements IAuditoriaUseCase{
 	}
 
 	@Override
-	public void eliminar(int idAuditoria) {
+	public void eliminar(Long idAuditoria) {
 		// TODO Auto-generated method stub
 		repositorio.eliminar(idAuditoria);
 	}

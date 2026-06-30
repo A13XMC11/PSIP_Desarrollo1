@@ -43,7 +43,7 @@ public class AuditoriaController {
 	}
 	
 	@DeleteMapping("/{idAuditoria}")
-	public ResponseEntity<Void> eliminar(@PathVariable int idAuditoria)
+	public ResponseEntity<Void> eliminar(@PathVariable Long idAuditoria)
 	{
 		auditoriaUseCase.eliminar(idAuditoria);
 		return ResponseEntity.noContent().build();
