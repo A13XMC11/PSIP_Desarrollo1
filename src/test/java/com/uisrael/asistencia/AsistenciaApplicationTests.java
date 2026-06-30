@@ -19,14 +19,14 @@ import com.uisrael.asistencia.infraestructura.persistencia.jpa.MarcacionesEntity
 import com.uisrael.asistencia.infraestructura.persistencia.jpa.ReporteDiarioEntity;
 import com.uisrael.asistencia.infraestructura.persistencia.jpa.RolEntity;
 import com.uisrael.asistencia.infraestructura.persistencia.jpa.UbicacionEntity;
-import com.uisrael.asistencia.infraestructura.repositorios.IAuditoriaRepositorio;
+import com.uisrael.asistencia.infraestructura.repositorios.IAuditoriaJpaRepositorio;
 import com.uisrael.asistencia.infraestructura.repositorios.ICodigosTemporalesJpaRepositorio;
 import com.uisrael.asistencia.infraestructura.repositorios.IEmpleadoHorarioJpaRepositorio;
 import com.uisrael.asistencia.infraestructura.repositorios.IEmpleadoJpaRepositorio;
 import com.uisrael.asistencia.infraestructura.repositorios.IHorariosJpaRepositorio;
 import com.uisrael.asistencia.infraestructura.repositorios.IMarcacionesJpaRepositorio;
-import com.uisrael.asistencia.infraestructura.repositorios.IReporteDiarioRepositorio;
-import com.uisrael.asistencia.infraestructura.repositorios.IRolRepositorio;
+import com.uisrael.asistencia.infraestructura.repositorios.IReporteDiarioJpaRepositorio;
+import com.uisrael.asistencia.infraestructura.repositorios.IRolJpaRepositorio;
 
 @SpringBootTest
 class AsistenciaApplicationTests {
@@ -40,11 +40,11 @@ class AsistenciaApplicationTests {
 	@Autowired
 	IEmpleadoHorarioJpaRepositorio repoEmpleadoHorario;
 	@Autowired
-	IRolRepositorio repoRol;
+	IRolJpaRepositorio repoRol;
 	@Autowired
-	IReporteDiarioRepositorio repoReporte;
+	IReporteDiarioJpaRepositorio repoReporte;
 	@Autowired
-	IAuditoriaRepositorio repoAuditoria;
+	IAuditoriaJpaRepositorio repoAuditoria;
 	@Autowired
 	IMarcacionesJpaRepositorio repoMercaciones;
 	
