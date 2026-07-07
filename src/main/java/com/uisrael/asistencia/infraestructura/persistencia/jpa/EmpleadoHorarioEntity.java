@@ -25,6 +25,10 @@ public class EmpleadoHorarioEntity {
 	private boolean estadoEmpleadoHorario;
 	
 	@ManyToOne
+	@JoinColumn(name = "fk_empleado")
+	private EmpleadoEntity fkEmpleadoEntity;
+	
+	@ManyToOne
 	@JoinColumn(name = "fk_horario")
 	private HorariosEntity fkHorarioEntity;
 }
