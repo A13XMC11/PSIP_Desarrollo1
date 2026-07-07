@@ -37,4 +37,13 @@ public class EmpleadoEntity {
 	
 	@OneToMany(mappedBy = "fkEmpleadoEntity")
 	private List<ReporteDiarioEntity> listaReportes = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "fkEmpleadoEntity")
+	private List<CodigosTemporalesEntity> listaCodigosTemporales = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "fkEmpleadoEntity")
+	private List<EmpleadoHorarioEntity> listaHorarios = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "fkEmpleadoEntity")
+	private List<MarcacionesEntity> listaMarcaciones = new ArrayList<>();
 }

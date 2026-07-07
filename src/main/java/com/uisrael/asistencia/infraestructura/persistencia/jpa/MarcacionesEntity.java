@@ -34,6 +34,14 @@ public class MarcacionesEntity {
 	private String observacion;
 	
 	@ManyToOne
+	@JoinColumn(name = "fk_empleado")
+	private EmpleadoEntity fkEmpleadoEntity;
+	
+	@ManyToOne
 	@JoinColumn(name = "fk_codigo")
 	private CodigosTemporalesEntity fkCodigoEntity;
+	
+	@ManyToOne
+	@JoinColumn(name = "fk_ubicacion")
+	private UbicacionEntity fkUbicacionEntity;
 }

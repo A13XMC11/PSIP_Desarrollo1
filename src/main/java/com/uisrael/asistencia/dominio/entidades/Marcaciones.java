@@ -3,12 +3,16 @@ package com.uisrael.asistencia.dominio.entidades;
 import java.time.LocalTime;
 import java.util.Date;
 
+import com.uisrael.asistencia.infraestructura.persistencia.jpa.CodigosTemporalesEntity;
+import com.uisrael.asistencia.infraestructura.persistencia.jpa.EmpleadoEntity;
+import com.uisrael.asistencia.infraestructura.persistencia.jpa.UbicacionEntity;
+
 public class Marcaciones {
 
 	private int idMarcaciones;
-	private int idEmpleado;
-	private int idCodigo;
-	private int idUbicacion;
+	private EmpleadoEntity fkEmpleadoEntity;
+	private CodigosTemporalesEntity fkCodigoEntity;
+	private UbicacionEntity fkUbicacionEntity;
 	private String tipo;
 	private Date fechaMarcacion;
 	private LocalTime horaMarcacion;
@@ -19,18 +23,14 @@ public class Marcaciones {
 	private boolean valida;
 	private String observacion;
 
-	public Marcaciones() {
-		super();
-	}
-
-	public Marcaciones(int idMarcaciones, int idEmpleado, int idCodigo, int idUbicacion, String tipo,
-			Date fechaMarcacion, LocalTime horaMarcacion, float latitud, float longitud, boolean dentroRango,
-			boolean dentroHorario, boolean valida, String observacion) {
+	public Marcaciones(int idMarcaciones, EmpleadoEntity fkEmpleadoEntity, CodigosTemporalesEntity fkCodigoEntity,
+			UbicacionEntity fkUbicacionEntity, String tipo, Date fechaMarcacion, LocalTime horaMarcacion, float latitud,
+			float longitud, boolean dentroRango, boolean dentroHorario, boolean valida, String observacion) {
 		super();
 		this.idMarcaciones = idMarcaciones;
-		this.idEmpleado = idEmpleado;
-		this.idCodigo = idCodigo;
-		this.idUbicacion = idUbicacion;
+		this.fkEmpleadoEntity = fkEmpleadoEntity;
+		this.fkCodigoEntity = fkCodigoEntity;
+		this.fkUbicacionEntity = fkUbicacionEntity;
 		this.tipo = tipo;
 		this.fechaMarcacion = fechaMarcacion;
 		this.horaMarcacion = horaMarcacion;
@@ -42,6 +42,10 @@ public class Marcaciones {
 		this.observacion = observacion;
 	}
 
+	public Marcaciones() {
+		super();
+	}
+
 	public int getIdMarcaciones() {
 		return idMarcaciones;
 	}
@@ -50,28 +54,28 @@ public class Marcaciones {
 		this.idMarcaciones = idMarcaciones;
 	}
 
-	public int getIdEmpleado() {
-		return idEmpleado;
+	public EmpleadoEntity getFkEmpleadoEntity() {
+		return fkEmpleadoEntity;
 	}
 
-	public void setIdEmpleado(int idEmpleado) {
-		this.idEmpleado = idEmpleado;
+	public void setFkEmpleadoEntity(EmpleadoEntity fkEmpleadoEntity) {
+		this.fkEmpleadoEntity = fkEmpleadoEntity;
 	}
 
-	public int getIdCodigo() {
-		return idCodigo;
+	public CodigosTemporalesEntity getFkCodigoEntity() {
+		return fkCodigoEntity;
 	}
 
-	public void setIdCodigo(int idCodigo) {
-		this.idCodigo = idCodigo;
+	public void setFkCodigoEntity(CodigosTemporalesEntity fkCodigoEntity) {
+		this.fkCodigoEntity = fkCodigoEntity;
 	}
 
-	public int getIdUbicacion() {
-		return idUbicacion;
+	public UbicacionEntity getFkUbicacionEntity() {
+		return fkUbicacionEntity;
 	}
 
-	public void setIdUbicacion(int idUbicacion) {
-		this.idUbicacion = idUbicacion;
+	public void setFkUbicacionEntity(UbicacionEntity fkUbicacionEntity) {
+		this.fkUbicacionEntity = fkUbicacionEntity;
 	}
 
 	public String getTipo() {

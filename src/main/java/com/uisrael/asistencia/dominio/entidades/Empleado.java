@@ -1,20 +1,22 @@
 package com.uisrael.asistencia.dominio.entidades;
 
+import com.uisrael.asistencia.infraestructura.persistencia.jpa.RolEntity;
+
 public class Empleado {
-	
+
 	private int idEmpleado;
-	private int idRol;
+	private RolEntity fkRolEntity;
 	private String nombreEmpleado;
 	private String apellidosEmpleado;
 	private String correoEmpleado;
 	private String contrasenaEmpleado;
 	private boolean estadoEmpleado;
 
-	public Empleado(int idEmpleado, int idRol, String nombreEmpleado, String apellidosEmpleado, String correoEmpleado,
-			String contrasenaEmpleado, boolean estadoEmpleado) {
+	public Empleado(int idEmpleado, RolEntity fkRolEntity, String nombreEmpleado, String apellidosEmpleado,
+			String correoEmpleado, String contrasenaEmpleado, boolean estadoEmpleado) {
 		super();
 		this.idEmpleado = idEmpleado;
-		this.idRol = idRol;
+		this.fkRolEntity = fkRolEntity;
 		this.nombreEmpleado = nombreEmpleado;
 		this.apellidosEmpleado = apellidosEmpleado;
 		this.correoEmpleado = correoEmpleado;
@@ -34,12 +36,12 @@ public class Empleado {
 		this.idEmpleado = idEmpleado;
 	}
 
-	public int getIdRol() {
-		return idRol;
+	public RolEntity getFkRolEntity() {
+		return fkRolEntity;
 	}
 
-	public void setIdRol(int idRol) {
-		this.idRol = idRol;
+	public void setFkRolEntity(RolEntity fkRolEntity) {
+		this.fkRolEntity = fkRolEntity;
 	}
 
 	public String getNombreEmpleado() {

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.uisrael.asistencia.aplicacion.casosuso.entrada.IEmpleadoUseCase;
+import com.uisrael.asistencia.dominio.entidades.Empleado;
+import com.uisrael.asistencia.infraestructura.persistencia.jpa.RolEntity;
 import com.uisrael.asistencia.presentacion.dto.request.EmpleadoRequestDto;
 import com.uisrael.asistencia.presentacion.dto.response.EmpleadoResponseDto;
 import com.uisrael.asistencia.presentacion.mapeadores.IEmpleadoDtoMapper;
@@ -30,7 +32,11 @@ public class EmpleadoController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public EmpleadoResponseDto guardar(@Valid @RequestBody EmpleadoRequestDto requestEmpleado) {
-		return mapper.toResponseDto(empleadoUseCase.guardar(mapper.toDomain(requestEmpleado)));
+		Empleado empleado = mapper.toDomain(requestEmpleado);
+		RolEntity rol = new RolEntity();
+		rol.setIdRol(requestEmpleado.getIdRol());
+		empleado.setFkRolEntity(rol);
+		return mapper.toResponseDto(empleadoUseCase.guardar(empleado));
 	}
 	@GetMapping
 	public List<EmpleadoResponseDto> listarTodos(){
