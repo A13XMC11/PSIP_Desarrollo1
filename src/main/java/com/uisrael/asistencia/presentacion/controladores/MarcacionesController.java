@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.uisrael.asistencia.aplicacion.casosuso.entrada.IMarcacionesUsaCase;
+import com.uisrael.asistencia.dominio.entidades.Marcaciones;
+import com.uisrael.asistencia.infraestructura.persistencia.jpa.CodigosTemporalesEntity;
+import com.uisrael.asistencia.infraestructura.persistencia.jpa.EmpleadoEntity;
+import com.uisrael.asistencia.infraestructura.persistencia.jpa.UbicacionEntity;
 import com.uisrael.asistencia.presentacion.dto.request.MarcacionesRequestDto;
 import com.uisrael.asistencia.presentacion.dto.response.MarcacionesResponseDto;
 import com.uisrael.asistencia.presentacion.mapeadores.IMarcacionesDtoMapper;
@@ -32,18 +36,34 @@ public class MarcacionesController {
 		this.marcacionesUseCase = marcacionesUseCase;
 		this.mapper = mapper;
 	}
-	
+
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public MarcacionesResponseDto guardar(@Valid @RequestBody MarcacionesRequestDto requestMarcaciones) {
-		return mapper.toResponseDto(marcacionesUseCase.guardar(mapper.toDomain(requestMarcaciones)));
+		Marcaciones marcaciones = mapper.toDomain(requestMarcaciones);
+
+		EmpleadoEntity empleado = new EmpleadoEntity();
+		empleado.setIdEmpleado(requestMarcaciones.getIdEmpleado());
+		marcaciones.setFkEmpleadoEntity(empleado);
+
+		CodigosTemporalesEntity codigo = new CodigosTemporalesEntity();
+		codigo.setIdCodigo(requestMarcaciones.getIdCodigo());
+		marcaciones.setFkCodigoEntity(codigo);
+
+		UbicacionEntity ubicacion = new UbicacionEntity();
+		ubicacion.setIdUbicacion(requestMarcaciones.getIdUbicacion());
+		marcaciones.setFkUbicacionEntity(ubicacion);
+
+		return mapper.toResponseDto(marcacionesUseCase.guardar(marcaciones));
 	}
+
 	@GetMapping
-	public List<MarcacionesResponseDto> listarTodos(){
+	public List<MarcacionesResponseDto> listarTodos() {
 		return marcacionesUseCase.listarTodos().stream().map(mapper::toResponseDto).toList();
 	}
+
 	@DeleteMapping("/{idMarcaciones}")
-	public ResponseEntity<Void> eliminar(@PathVariable int idMarcaciones){
+	public ResponseEntity<Void> eliminar(@PathVariable int idMarcaciones) {
 		marcacionesUseCase.eliminar(idMarcaciones);
 		return ResponseEntity.noContent().build();
 	}
