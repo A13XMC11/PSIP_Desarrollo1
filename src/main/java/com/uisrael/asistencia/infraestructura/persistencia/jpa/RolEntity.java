@@ -27,5 +27,5 @@ public class RolEntity {
 	
 	@OneToMany(mappedBy = "fkRolEntity")
 	private List<EmpleadoEntity> listaEmpleados = new ArrayList<>();
-	
+
 }

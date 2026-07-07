@@ -30,5 +30,4 @@ public class AuditoriaEntity {
 	@ManyToOne
 	@JoinColumn(name = "fk_empleado")
 	private EmpleadoEntity fkEmpleadoEntity;
-	
 }
