@@ -13,4 +13,6 @@ public interface ICodigosTemporalesUseCase {
 	List<CodigosTemporales> listarTodos();
 
 	void eliminar(int idCodigosTemporales);
+	
+	CodigosTemporales validarCodigo(String codigo, int idEmpleado);
 }

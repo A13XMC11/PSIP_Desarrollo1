@@ -35,6 +35,11 @@ public class CodigosTemporalesUseCaseImpl implements ICodigosTemporalesUseCase{
 	public void eliminar(int idCodigosTemporales) {
 		repositorio.eliminar(idCodigosTemporales);
 	}
+
+	@Override
+	public CodigosTemporales validarCodigo(String codigo, int idEmpleado) {
+		return repositorio.validarCodigo(codigo, idEmpleado).orElseThrow(() -> new RuntimeException("Codigo invalido, usado o expirado"));
+	}
 	
 	
 }

@@ -1,5 +1,6 @@
 package com.uisrael.asistencia.infraestructura.persistencia.adaptadores;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +41,11 @@ public class CodigosTempralesRepositorioImpl implements ICodigosTemporalesReposi
 	@Override
 	public void eliminar(int idCodigosTemporales) {
 		jpaRepositorio.deleteById(idCodigosTemporales);		
+	}
+
+	@Override
+	public Optional<CodigosTemporales> validarCodigo(String codigo, int idEmpleado) {
+		return jpaRepositorio.validarCodigo(codigo, idEmpleado, LocalDateTime.now()).map(entityMapper::toDomain);
 	}
 	
 	
