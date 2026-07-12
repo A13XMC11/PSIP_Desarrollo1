@@ -13,4 +13,6 @@ public interface IRolUseCase {
 	List<Rol> listarTodos();
 
 	void eliminar(int idRol);
+
+	List<Rol> buscarPorNombre(String nombre);
 }

@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import com.uisrael.asistencia.dominio.entidades.Auditoria;
 import com.uisrael.asistencia.dominio.repositorio.IAuditoriaRepositorio;
-import com.uisrael.asistencia.infraestructura.persistencia.jpa.AuditoriaEntity;
 import com.uisrael.asistencia.infraestructura.persistencia.mapeadores.IAuditoriaJpaMapper;
 import com.uisrael.asistencia.infraestructura.repositorios.IAuditoriaJpaRepositorio;
 
@@ -15,16 +14,13 @@ public class AuditoriaRepositorioImpl implements IAuditoriaRepositorio {
 	private final IAuditoriaJpaMapper entityMapper;
 
 	public AuditoriaRepositorioImpl(IAuditoriaJpaRepositorio jpaRepositorio, IAuditoriaJpaMapper entityMapper) {
-		super();
 		this.jpaRepositorio = jpaRepositorio;
 		this.entityMapper = entityMapper;
 	}
 
 	@Override
 	public Auditoria guardar(Auditoria nuevaAuditoria) {
-		AuditoriaEntity entity = entityMapper.toEntity(nuevaAuditoria);
-		AuditoriaEntity guardado = jpaRepositorio.save(entity);
-		return entityMapper.toDomain(guardado);
+		return entityMapper.toDomain(jpaRepositorio.save(entityMapper.toEntity(nuevaAuditoria)));
 	}
 
 	@Override
@@ -39,8 +35,27 @@ public class AuditoriaRepositorioImpl implements IAuditoriaRepositorio {
 
 	@Override
 	public void eliminar(Long idAuditoria) {
-		// TODO Auto-generated method stub
 		jpaRepositorio.deleteById(idAuditoria);
+	}
+
+	@Override
+	public List<Auditoria> buscarPorEmpleado(int idEmpleado) {
+		return jpaRepositorio.buscarPorEmpleado(idEmpleado).stream().map(entityMapper::toDomain).toList();
+	}
+
+	@Override
+	public List<Auditoria> buscarPorTabla(String tabla) {
+		return jpaRepositorio.buscarPorTabla(tabla).stream().map(entityMapper::toDomain).toList();
+	}
+
+	@Override
+	public List<Auditoria> buscarPorIp(String ip) {
+		return jpaRepositorio.buscarPorIp(ip).stream().map(entityMapper::toDomain).toList();
+	}
+
+	@Override
+	public List<Auditoria> buscarPorAccion(String accion) {
+		return jpaRepositorio.buscarPorAccion(accion).stream().map(entityMapper::toDomain).toList();
 	}
 
 }
