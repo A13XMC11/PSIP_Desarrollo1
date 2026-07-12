@@ -37,5 +37,15 @@ public class UbicacionUseCaseImpl implements IUbicacionUseCase {
 		repositorio.eliminar(idUbicacion);
 
 	}
+	
+	@Override
+    public List<Ubicacion> listarUbicacionesActivas() {
+        return repositorio.listarUbicacionesActivas();
+    }
+
+    @Override
+    public List<Ubicacion> buscarPorNombre(String nombre) {
+        return repositorio.findByNombreUbicacion(nombre);
+    }
 
 }

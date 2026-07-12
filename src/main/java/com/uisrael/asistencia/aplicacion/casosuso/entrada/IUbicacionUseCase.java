@@ -12,4 +12,8 @@ public interface IUbicacionUseCase {
 	List<Ubicacion> listarTodos();
 
 	void eliminar(int idUbicacion);
+
+	List<Ubicacion> listarUbicacionesActivas();
+
+	List<Ubicacion> buscarPorNombre(String nombre);
 }

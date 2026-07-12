@@ -32,20 +32,32 @@ public class UbicacionController {
 		this.ubicacionUseCase = ubicacionUseCase;
 		this.mapper = mapper;
 	}
+
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public UbicacionResponseDto guardar(@Valid @RequestBody UbicacionRequestDto requestUbicacion) {
 		return mapper.toResponseDto(ubicacionUseCase.guardar(mapper.toDomain(requestUbicacion)));
 	}
+
 	@GetMapping
-	public List<UbicacionResponseDto> listarTodos(){
+	public List<UbicacionResponseDto> listarTodos() {
 		return ubicacionUseCase.listarTodos().stream().map(mapper::toResponseDto).toList();
 	}
+
 	@DeleteMapping("/{idUbicacion}")
-	public ResponseEntity<Void> eliminar(@PathVariable int idUbicacion){
+	public ResponseEntity<Void> eliminar(@PathVariable int idUbicacion) {
 		ubicacionUseCase.eliminar(idUbicacion);
 		return ResponseEntity.noContent().build();
 	}
-	
+
+	@GetMapping("/activas")
+	public List<UbicacionResponseDto> listarActivas() {
+		return ubicacionUseCase.listarUbicacionesActivas().stream().map(mapper::toResponseDto).toList();
+	}
+
+	@GetMapping("/nombre/{nombre}")
+	public List<UbicacionResponseDto> buscarPorNombre(@PathVariable String nombre) {
+		return ubicacionUseCase.buscarPorNombre(nombre).stream().map(mapper::toResponseDto).toList();
+	}
 
 }

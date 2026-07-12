@@ -47,4 +47,14 @@ public class UbicacionRepositorioImpl implements IUbicacionRepositorio {
 
 	}
 
+	@Override
+	public List<Ubicacion> listarUbicacionesActivas() {
+		return jpaRepositorio.listarUbicacionesActivas().stream().map(entityMapper::toDomain).toList();
+	}
+
+	@Override
+	public List<Ubicacion> findByNombreUbicacion(String nombre) {
+		return jpaRepositorio.findByNombreUbicacion(nombre).stream().map(entityMapper::toDomain).toList();
+	}
+
 }
