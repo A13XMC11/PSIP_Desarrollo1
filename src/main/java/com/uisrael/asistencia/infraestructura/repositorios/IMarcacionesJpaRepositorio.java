@@ -24,4 +24,7 @@ public interface IMarcacionesJpaRepositorio extends JpaRepository<MarcacionesEnt
 
 	@Query("Select m from MarcacionesEntity m where m.dentroRango=true and m.dentroHorario=true")
 	List<MarcacionesEntity> listarMarcacionesCorrectas();
+
+	@Query("Select m from MarcacionesEntity m where m.fkUbicacionEntity.idUbicacion=?1")
+	List<MarcacionesEntity> buscarPorUbicacion(int idUbicacion);
 }

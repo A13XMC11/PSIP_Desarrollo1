@@ -20,4 +20,7 @@ public interface IEmpleadoJpaRepositorio extends JpaRepository<EmpleadoEntity, I
 	@Query("Select e from EmpleadoEntity e where e.nombreEmpleado=?1")
 	List<EmpleadoEntity> buscarPorNombre(String nombre);
 
+	@Query("Select e from EmpleadoEntity e where e.apellidosEmpleado=?1")
+	List<EmpleadoEntity> buscarPorApellido(String apellido);
+
 }

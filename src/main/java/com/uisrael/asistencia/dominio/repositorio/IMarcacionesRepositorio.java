@@ -25,5 +25,7 @@ public interface IMarcacionesRepositorio {
 	List<Marcaciones> listarMarcacionesValidas();
 
 	List<Marcaciones> listarMarcacionesCorrectas();
+	
+	List<Marcaciones> buscarPorUbicacion(int idUbicacion);
 
 }

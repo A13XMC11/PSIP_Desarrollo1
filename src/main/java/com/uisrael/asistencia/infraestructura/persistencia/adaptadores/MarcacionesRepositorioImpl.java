@@ -72,4 +72,9 @@ public class MarcacionesRepositorioImpl implements IMarcacionesRepositorio {
 		return jpaRerpositorio.listarMarcacionesCorrectas().stream().map(entityMapper::toDomain).toList();
 	}
 
+	@Override
+	public List<Marcaciones> buscarPorUbicacion(int idUbicacion) {
+		return jpaRerpositorio.buscarPorUbicacion(idUbicacion).stream().map(entityMapper::toDomain).toList();
+	}
+
 }

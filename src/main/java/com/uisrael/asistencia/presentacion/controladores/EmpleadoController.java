@@ -74,4 +74,9 @@ public class EmpleadoController {
 	public List<EmpleadoResponseDto> buscarPorNombre(@PathVariable String nombre) {
 		return empleadoUseCase.buscarPorNombre(nombre).stream().map(mapper::toResponseDto).toList();
 	}
+
+	@GetMapping("/apellido/{apellido}")
+	public List<EmpleadoResponseDto> buscarPorApellido(@PathVariable String apellido) {
+		return empleadoUseCase.buscarPorApellido(apellido).stream().map(mapper::toResponseDto).toList();
+	}
 }

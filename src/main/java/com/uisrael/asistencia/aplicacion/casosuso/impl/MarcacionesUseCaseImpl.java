@@ -66,4 +66,9 @@ public class MarcacionesUseCaseImpl implements IMarcacionesUsaCase {
 		return repositorio.listarMarcacionesCorrectas();
 	}
 
+	@Override
+	public List<Marcaciones> buscarPorUbicacion(int idUbicacion) {
+		return repositorio.buscarPorUbicacion(idUbicacion);
+	}
+
 }

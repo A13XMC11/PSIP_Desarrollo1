@@ -21,4 +21,6 @@ public interface IEmpleadoUseCase {
 	List<Empleado> buscarPorRol(int idRol);
 
 	List<Empleado> buscarPorNombre(String nombre);
+	
+	List<Empleado> buscarPorApellido(String apellido);
 }

@@ -63,4 +63,9 @@ public class EmpleadoRepositorioImpl implements IEmpleadoRepositorio {
 		return jpaRepositorio.buscarPorNombre(nombre).stream().map(entityMapper::toDomain).toList();
 	}
 
+	@Override
+	public List<Empleado> buscarPorApellido(String apellido) {
+		return jpaRepositorio.buscarPorApellido(apellido).stream().map(entityMapper::toDomain).toList();
+	}
+
 }

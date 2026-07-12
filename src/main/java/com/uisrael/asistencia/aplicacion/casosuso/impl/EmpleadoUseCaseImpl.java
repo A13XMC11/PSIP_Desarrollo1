@@ -57,4 +57,9 @@ public class EmpleadoUseCaseImpl implements IEmpleadoUseCase {
 		return repositorio.buscarPorNombre(nombre);
 	}
 
+	@Override
+	public List<Empleado> buscarPorApellido(String apellido) {
+		return repositorio.buscarPorApellido(apellido);
+	}
+
 }

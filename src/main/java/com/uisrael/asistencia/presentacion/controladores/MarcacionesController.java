@@ -96,4 +96,9 @@ public class MarcacionesController {
 		return marcacionesUseCase.listarMarcacionesCorrectas().stream().map(mapper::toResponseDto).toList();
 	}
 
+	@GetMapping("/ubicacion/{idUbicacion}")
+	public List<MarcacionesResponseDto> buscarPorUbicacion(@PathVariable int idUbicacion) {
+		return marcacionesUseCase.buscarPorUbicacion(idUbicacion).stream().map(mapper::toResponseDto).toList();
+	}
+
 }
