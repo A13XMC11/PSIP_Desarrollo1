@@ -33,7 +33,7 @@ public class EmpleadoRepositorioImpl implements IEmpleadoRepositorio {
 
 	@Override
 	public List<Empleado> listarTodos() {
-		
+
 		return jpaRepositorio.findAll().stream().map(entityMapper::toDomain).toList();
 	}
 
@@ -41,6 +41,26 @@ public class EmpleadoRepositorioImpl implements IEmpleadoRepositorio {
 	public void eliminar(int idEmpleado) {
 		jpaRepositorio.deleteById(idEmpleado);
 
+	}
+
+	@Override
+	public List<Empleado> findByCorreoEmpleado(String correo) {
+		return jpaRepositorio.findByCorreoEmpleado(correo).stream().map(entityMapper::toDomain).toList();
+	}
+
+	@Override
+	public List<Empleado> listarEmpleadosActivos() {
+		return jpaRepositorio.listarEmpleadosActivos().stream().map(entityMapper::toDomain).toList();
+	}
+
+	@Override
+	public List<Empleado> buscarPorRol(int idRol) {
+		return jpaRepositorio.buscarPorRol(idRol).stream().map(entityMapper::toDomain).toList();
+	}
+
+	@Override
+	public List<Empleado> buscarPorNombre(String nombre) {
+		return jpaRepositorio.buscarPorNombre(nombre).stream().map(entityMapper::toDomain).toList();
 	}
 
 }

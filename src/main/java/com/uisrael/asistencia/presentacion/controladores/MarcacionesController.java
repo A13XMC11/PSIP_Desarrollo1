@@ -1,5 +1,6 @@
 package com.uisrael.asistencia.presentacion.controladores;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -66,6 +67,33 @@ public class MarcacionesController {
 	public ResponseEntity<Void> eliminar(@PathVariable int idMarcaciones) {
 		marcacionesUseCase.eliminar(idMarcaciones);
 		return ResponseEntity.noContent().build();
+	}
+
+	@GetMapping("/empleado/{idEmpleado}")
+	public List<MarcacionesResponseDto> buscarPorEmpleado(@PathVariable int idEmpleado) {
+		return marcacionesUseCase.buscarPorEmpleado(idEmpleado).stream().map(mapper::toResponseDto).toList();
+	}
+
+	@GetMapping("/empleado/{idEmpleado}/fecha/{fecha}")
+	public List<MarcacionesResponseDto> buscarPorEmpleadoYFecha(@PathVariable int idEmpleado,
+			@PathVariable LocalDate fecha) {
+		return marcacionesUseCase.buscarPorEmpleadoYFecha(idEmpleado, fecha).stream().map(mapper::toResponseDto)
+				.toList();
+	}
+
+	@GetMapping("/tipo/{tipo}")
+	public List<MarcacionesResponseDto> buscarPorTipo(@PathVariable String tipo) {
+		return marcacionesUseCase.buscarPorTipo(tipo).stream().map(mapper::toResponseDto).toList();
+	}
+
+	@GetMapping("/validas")
+	public List<MarcacionesResponseDto> listarValidas() {
+		return marcacionesUseCase.listarMarcacionesValidas().stream().map(mapper::toResponseDto).toList();
+	}
+
+	@GetMapping("/correctas")
+	public List<MarcacionesResponseDto> listarCorrectas() {
+		return marcacionesUseCase.listarMarcacionesCorrectas().stream().map(mapper::toResponseDto).toList();
 	}
 
 }

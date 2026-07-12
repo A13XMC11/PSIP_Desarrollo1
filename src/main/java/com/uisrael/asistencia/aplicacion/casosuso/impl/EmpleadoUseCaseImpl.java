@@ -35,7 +35,26 @@ public class EmpleadoUseCaseImpl implements IEmpleadoUseCase {
 	@Override
 	public void eliminar(int idEmpleado) {
 		repositorio.eliminar(idEmpleado);
+	}
 
+	@Override
+	public List<Empleado> findByCorreoEmpleado(String correo) {
+		return repositorio.findByCorreoEmpleado(correo);
+	}
+
+	@Override
+	public List<Empleado> listarEmpleadosActivos() {
+		return repositorio.listarEmpleadosActivos();
+	}
+
+	@Override
+	public List<Empleado> buscarPorRol(int idRol) {
+		return repositorio.buscarPorRol(idRol);
+	}
+
+	@Override
+	public List<Empleado> buscarPorNombre(String nombre) {
+		return repositorio.buscarPorNombre(nombre);
 	}
 
 }

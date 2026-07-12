@@ -1,5 +1,6 @@
 package com.uisrael.asistencia.infraestructura.persistencia.adaptadores;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,6 +45,31 @@ public class MarcacionesRepositorioImpl implements IMarcacionesRepositorio {
 	public void eliminar(int idMarcaciones) {
 		jpaRerpositorio.deleteById(idMarcaciones);
 
+	}
+
+	@Override
+	public List<Marcaciones> buscarPorEmpleado(int idEmpleado) {
+		return jpaRerpositorio.buscarPorEmpleado(idEmpleado).stream().map(entityMapper::toDomain).toList();
+	}
+
+	@Override
+	public List<Marcaciones> buscarPorEmpleadoYFecha(int idEmpleado, LocalDate fecha) {
+		return jpaRerpositorio.buscarPorEmpleadoYFecha(idEmpleado, fecha).stream().map(entityMapper::toDomain).toList();
+	}
+
+	@Override
+	public List<Marcaciones> buscarPorTipo(String tipo) {
+		return jpaRerpositorio.buscarPorTipo(tipo).stream().map(entityMapper::toDomain).toList();
+	}
+
+	@Override
+	public List<Marcaciones> listarMarcacionesValidas() {
+		return jpaRerpositorio.listarMarcacionesValidas().stream().map(entityMapper::toDomain).toList();
+	}
+
+	@Override
+	public List<Marcaciones> listarMarcacionesCorrectas() {
+		return jpaRerpositorio.listarMarcacionesCorrectas().stream().map(entityMapper::toDomain).toList();
 	}
 
 }
