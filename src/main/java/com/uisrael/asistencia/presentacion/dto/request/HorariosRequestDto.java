@@ -3,6 +3,7 @@ package com.uisrael.asistencia.presentacion.dto.request;
 import java.time.LocalTime;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -11,12 +12,11 @@ public class HorariosRequestDto {
 	private int idHorario;
 	@NotBlank
 	private String nombre;
-	@NotBlank
+	@NotNull
 	private LocalTime horaEntrada;
-	@NotBlank
+	@NotNull
 	private LocalTime horaSalida;
-	@NotBlank
+	@NotNull
 	private int toleranciaMinutos;
-	@NotBlank
 	private boolean estadoHorario;
 }

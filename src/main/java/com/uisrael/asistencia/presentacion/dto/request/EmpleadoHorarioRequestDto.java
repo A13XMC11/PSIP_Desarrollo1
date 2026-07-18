@@ -3,19 +3,20 @@ package com.uisrael.asistencia.presentacion.dto.request;
 import java.sql.Date;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
 public class EmpleadoHorarioRequestDto {
+	
 	private int idAsignacion;
-	@NotBlank
+	@NotNull
 	private int idEmpleado;
-	@NotBlank
+	@NotNull
 	private int idHorario;
-	@NotBlank
+	@NotNull
 	private Date fechaInicio;
-	@NotBlank
+	@NotNull
 	private Date fechaFin;
-	@NotBlank
 	private boolean estadoEmpleadoHorario;
 }
