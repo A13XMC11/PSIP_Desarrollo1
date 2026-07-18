@@ -13,4 +13,8 @@ public interface IHorariosUseCase {
 	List<Horarios> listarTodos();
 
 	void eliminar(int idHorarios);
+
+	List<Horarios> listarHorariosActivos();
+
+	List<Horarios> buscarPorNombre(String nombre);
 }

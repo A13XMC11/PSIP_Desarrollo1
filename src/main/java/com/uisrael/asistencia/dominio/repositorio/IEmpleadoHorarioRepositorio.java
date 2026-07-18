@@ -14,4 +14,8 @@ public interface IEmpleadoHorarioRepositorio {
 	List<EmpleadoHorario> listarTodos();
 
 	void eliminar(int idEmpleadoHorario);
+
+	List<EmpleadoHorario> buscarHorariosActivosPorEmpleado(int idEmpleado);
+
+	List<EmpleadoHorario> buscarPorHorario(int idHorario);
 }

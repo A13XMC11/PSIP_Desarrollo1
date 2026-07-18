@@ -36,26 +36,31 @@ public class CodigosTemporalesController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public CodigosTemporalesResponseDto guardar(@Valid @RequestBody CodigosTemporalesRequestDto requestCodigosTemporales) {
+	public CodigosTemporalesResponseDto guardar(
+			@Valid @RequestBody CodigosTemporalesRequestDto requestCodigosTemporales) {
 		return mapper.toResponseDto(codigosTemporalesUseCase.guardar(mapper.toDomain(requestCodigosTemporales)));
 
 	}
 
 	@GetMapping
-	public List<CodigosTemporalesResponseDto> listarTodos()
-	{
-		return codigosTemporalesUseCase.listarTodos().stream()
-				.map(mapper :: toResponseDto).toList();
+	public List<CodigosTemporalesResponseDto> listarTodos() {
+		return codigosTemporalesUseCase.listarTodos().stream().map(mapper::toResponseDto).toList();
 	}
-	
+
 	@DeleteMapping("/{idCodigosTemporales}")
-	public ResponseEntity<Void> eliminar(@PathVariable int idCodigosTemporales){
+	public ResponseEntity<Void> eliminar(@PathVariable int idCodigosTemporales) {
 		codigosTemporalesUseCase.eliminar(idCodigosTemporales);
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@GetMapping("validar")
-	public CodigosTemporalesResponseDto validarCodigo(@RequestParam String codigo, @RequestParam int idEmpleado){
-			return mapper.toResponseDto(codigosTemporalesUseCase.validarCodigo(codigo, idEmpleado));
+	public CodigosTemporalesResponseDto validarCodigo(@RequestParam String codigo, @RequestParam int idEmpleado) {
+		return mapper.toResponseDto(codigosTemporalesUseCase.validarCodigo(codigo, idEmpleado));
+	}
+
+	@GetMapping("/empleado/{idEmpleado}/activos")
+	public List<CodigosTemporalesResponseDto> buscarCodigosActivos(@PathVariable int idEmpleado) {
+		return codigosTemporalesUseCase.buscarCodigosActivosPorEmpleado(idEmpleado).stream().map(mapper::toResponseDto)
+				.toList();
 	}
 }

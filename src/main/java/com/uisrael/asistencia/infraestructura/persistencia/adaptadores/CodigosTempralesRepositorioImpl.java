@@ -47,6 +47,11 @@ public class CodigosTempralesRepositorioImpl implements ICodigosTemporalesReposi
 	public Optional<CodigosTemporales> validarCodigo(String codigo, int idEmpleado) {
 		return jpaRepositorio.validarCodigo(codigo, idEmpleado, LocalDateTime.now()).map(entityMapper::toDomain);
 	}
+
+	@Override
+	public List<CodigosTemporales> buscarCodigosActivosPorEmpleado(int idEmpleado) {
+        return jpaRepositorio.buscarCodigosActivosPorEmpleado(idEmpleado).stream().map(entityMapper::toDomain).toList();
+	}
 	
 	
 }

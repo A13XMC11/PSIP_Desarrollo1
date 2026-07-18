@@ -52,4 +52,14 @@ public class EmpleadoHorarioController {
 		empleadoHorarioUseCase.eliminar(idEmpleadoHorario);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@GetMapping("/empleado/{idEmpleado}/activos")
+    public List<EmpleadoHorarioResponseDto> buscarHorariosActivos(@PathVariable int idEmpleado) {
+        return empleadoHorarioUseCase.buscarHorariosActivosPorEmpleado(idEmpleado).stream().map(mapper::toResponseDto).toList();
+    }
+
+    @GetMapping("/horario/{idHorario}")
+    public List<EmpleadoHorarioResponseDto> buscarPorHorario(@PathVariable int idHorario) {
+        return empleadoHorarioUseCase.buscarPorHorario(idHorario).stream().map(mapper::toResponseDto).toList();
+    }
 }

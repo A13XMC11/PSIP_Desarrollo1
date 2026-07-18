@@ -35,6 +35,16 @@ public class EmpleadoHorarioUseCaseImpl implements IEmpleadoHorarioUseCase{
 	public void eliminar(int idEmpleadoHorario) {
 		repositorio.eliminar(idEmpleadoHorario);
 	}
+
+	@Override
+	public List<EmpleadoHorario> buscarHorariosActivosPorEmpleado(int idEmpleado) {
+        return repositorio.buscarHorariosActivosPorEmpleado(idEmpleado);
+	}
+
+	@Override
+	public List<EmpleadoHorario> buscarPorHorario(int idHorario) {
+        return repositorio.buscarPorHorario(idHorario);
+	}
 	
 	
 }

@@ -6,7 +6,7 @@ import java.util.Optional;
 import com.uisrael.asistencia.dominio.entidades.Horarios;
 
 public interface IHorariosRepositorio {
-	
+
 	Horarios guardar(Horarios nuevoHorario);
 
 	Optional<Horarios> buscarPorId(int idHorarios);
@@ -14,4 +14,8 @@ public interface IHorariosRepositorio {
 	List<Horarios> listarTodos();
 
 	void eliminar(int idHorarios);
+
+	List<Horarios> listarHorariosActivos();
+
+	List<Horarios> findByNombre(String nombre);
 }

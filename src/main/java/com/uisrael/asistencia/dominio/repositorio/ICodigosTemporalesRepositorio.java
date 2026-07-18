@@ -14,6 +14,8 @@ public interface ICodigosTemporalesRepositorio {
 	List<CodigosTemporales> listarTodos();
 
 	void eliminar(int idCodigosTemporales);
-	
+
 	Optional<CodigosTemporales> validarCodigo(String codigo, int idEmpleado);
+
+	List<CodigosTemporales> buscarCodigosActivosPorEmpleado(int idEmpleado);
 }

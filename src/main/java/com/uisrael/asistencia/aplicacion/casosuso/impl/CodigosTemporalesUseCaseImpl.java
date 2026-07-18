@@ -40,6 +40,11 @@ public class CodigosTemporalesUseCaseImpl implements ICodigosTemporalesUseCase{
 	public CodigosTemporales validarCodigo(String codigo, int idEmpleado) {
 		return repositorio.validarCodigo(codigo, idEmpleado).orElseThrow(() -> new RuntimeException("Codigo invalido, usado o expirado"));
 	}
+
+	@Override
+	public List<CodigosTemporales> buscarCodigosActivosPorEmpleado(int idEmpleado) {
+        return repositorio.buscarCodigosActivosPorEmpleado(idEmpleado);
+	}
 	
 	
 }

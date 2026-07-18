@@ -41,6 +41,16 @@ public class EmpleadoHorarioRepositorioImpl implements IEmpleadoHorarioRepositor
 		jpaRepositorio.deleteById(idEmpleadoHorario);
 		
 	}
+
+	@Override
+	public List<EmpleadoHorario> buscarHorariosActivosPorEmpleado(int idEmpleado) {
+        return jpaRepositorio.buscarHorariosActivosPorEmpleado(idEmpleado).stream().map(entityMapper::toDomain).toList();
+	}
+
+	@Override
+	public List<EmpleadoHorario> buscarPorHorario(int idHorario) {
+        return jpaRepositorio.buscarPorHorario(idHorario).stream().map(entityMapper::toDomain).toList();
+	}
 	
 	
 }

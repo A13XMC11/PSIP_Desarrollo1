@@ -5,7 +5,7 @@ import java.util.List;
 import com.uisrael.asistencia.dominio.entidades.EmpleadoHorario;
 
 public interface IEmpleadoHorarioUseCase {
-	
+
 	EmpleadoHorario guardar(EmpleadoHorario nuevoEmpleadoHorario);
 
 	EmpleadoHorario buscarPorId(int idEmpleadoHorario);
@@ -13,4 +13,8 @@ public interface IEmpleadoHorarioUseCase {
 	List<EmpleadoHorario> listarTodos();
 
 	void eliminar(int idEmpleadoHorario);
+
+	List<EmpleadoHorario> buscarHorariosActivosPorEmpleado(int idEmpleado);
+
+	List<EmpleadoHorario> buscarPorHorario(int idHorario);
 }

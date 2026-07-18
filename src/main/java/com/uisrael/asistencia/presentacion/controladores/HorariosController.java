@@ -23,7 +23,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/asistencia/horarios")
 public class HorariosController {
-	
+
 	private final IHorariosUseCase horariosUseCase;
 	private final IHorariosDtoMapper mapper;
 
@@ -41,15 +41,23 @@ public class HorariosController {
 	}
 
 	@GetMapping
-	public List<HorariosResponseDto> listarTodos()
-	{
-		return horariosUseCase.listarTodos().stream()
-				.map(mapper :: toResponseDto).toList();
+	public List<HorariosResponseDto> listarTodos() {
+		return horariosUseCase.listarTodos().stream().map(mapper::toResponseDto).toList();
 	}
-	
+
 	@DeleteMapping("/{idHorarios}")
-	public ResponseEntity<Void> eliminar(@PathVariable int idHorarios){
+	public ResponseEntity<Void> eliminar(@PathVariable int idHorarios) {
 		horariosUseCase.eliminar(idHorarios);
 		return ResponseEntity.noContent().build();
+	}
+
+	@GetMapping("/activos")
+	public List<HorariosResponseDto> listarActivos() {
+		return horariosUseCase.listarHorariosActivos().stream().map(mapper::toResponseDto).toList();
+	}
+
+	@GetMapping("/nombre/{nombre}")
+	public List<HorariosResponseDto> buscarPorNombre(@PathVariable String nombre) {
+		return horariosUseCase.buscarPorNombre(nombre).stream().map(mapper::toResponseDto).toList();
 	}
 }

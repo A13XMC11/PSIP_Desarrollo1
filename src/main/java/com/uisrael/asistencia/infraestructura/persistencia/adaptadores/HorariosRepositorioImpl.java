@@ -41,6 +41,16 @@ public class HorariosRepositorioImpl implements IHorariosRepositorio{
 		jpaRepositorio.deleteById(idHorarios);		
 	}
 
+	@Override
+	public List<Horarios> listarHorariosActivos() {
+        return jpaRepositorio.listarHorariosActivos().stream().map(entityMapper::toDomain).toList();
+	}
+
+	@Override
+	public List<Horarios> findByNombre(String nombre) {
+        return jpaRepositorio.findByNombre(nombre).stream().map(entityMapper::toDomain).toList();
+	}
+
 	
 	
 	

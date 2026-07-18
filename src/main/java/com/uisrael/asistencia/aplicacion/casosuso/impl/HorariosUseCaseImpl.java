@@ -35,5 +35,15 @@ public class HorariosUseCaseImpl implements IHorariosUseCase{
 	public void eliminar(int idHorarios) {
 		repositorio.eliminar(idHorarios);
 	}
+
+	@Override
+	public List<Horarios> listarHorariosActivos() {
+        return repositorio.listarHorariosActivos();
+	}
+
+	@Override
+	public List<Horarios> buscarPorNombre(String nombre) {
+        return repositorio.findByNombre(nombre);
+	}
 	
 }
