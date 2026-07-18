@@ -72,5 +72,6 @@ public class EmpleadoHorario {
 	public void setEstadoEmpleadoHorario(boolean estadoEmpleadoHorario) {
 		this.estadoEmpleadoHorario = estadoEmpleadoHorario;
 	}
+	
 
 }

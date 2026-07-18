@@ -1,6 +1,8 @@
 package com.uisrael.asistencia.infraestructura.repositorios;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,4 +15,5 @@ public interface IEmpleadoHorarioJpaRepositorio extends JpaRepository<EmpleadoHo
 
     @Query("Select eh from EmpleadoHorarioEntity eh where eh.fkHorarioEntity.idHorario=?1")
     List<EmpleadoHorarioEntity> buscarPorHorario(int idHorario);
+    
 }
