@@ -22,5 +22,7 @@ public interface IReporteDiarioUseCase {
 	List<ReporteDiario> listarConTardanza();
 
 	List<ReporteDiario> listarMarcacionesIncompletas();
+	
+	void generarOActualizar(int idEmpleado, LocalDate fecha);
 }
  
