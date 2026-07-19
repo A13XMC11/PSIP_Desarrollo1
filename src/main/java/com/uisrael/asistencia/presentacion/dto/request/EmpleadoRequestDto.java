@@ -1,13 +1,14 @@
 package com.uisrael.asistencia.presentacion.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
 public class EmpleadoRequestDto {
 	
 	private int idEmpleado;
-	@NotBlank
+	@NotNull
 	private int idRol;
 	@NotBlank
 	private String nombreEmpleado;
@@ -17,6 +18,6 @@ public class EmpleadoRequestDto {
 	private String correoEmpleado;
 	@NotBlank
 	private String contrasenaEmpleado;
-	@NotBlank
+	
 	private boolean estadoEmpleado;
 }

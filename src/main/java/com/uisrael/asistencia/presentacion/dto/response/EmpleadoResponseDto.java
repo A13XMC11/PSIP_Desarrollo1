@@ -7,7 +7,6 @@ public class EmpleadoResponseDto {
 	private String nombreEmpleado;
 	private String apellidosEmpleado;
 	private String correoEmpleado;
-	private String contrasenaEmpleado;
 	private boolean estadoEmpleado;
 	public int getIdEmpleado() {
 		return idEmpleado;
@@ -38,12 +37,6 @@ public class EmpleadoResponseDto {
 	}
 	public void setCorreoEmpleado(String correoEmpleado) {
 		this.correoEmpleado = correoEmpleado;
-	}
-	public String getContrasenaEmpleado() {
-		return contrasenaEmpleado;
-	}
-	public void setContrasenaEmpleado(String contrasenaEmpleado) {
-		this.contrasenaEmpleado = contrasenaEmpleado;
 	}
 	public boolean isEstadoEmpleado() {
 		return estadoEmpleado;
