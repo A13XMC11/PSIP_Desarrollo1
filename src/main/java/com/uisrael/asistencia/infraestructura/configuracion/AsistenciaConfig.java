@@ -92,7 +92,7 @@ public class AsistenciaConfig {
 		return new MarcacionesRepositorioImpl(jpaRepositorio, mapper);
 	}
 	@Bean
-	IMarcacionesUsaCase marcacionesUsaCase(IMarcacionesRepositorio repo,
+	IMarcacionesUsaCase marcacionesUseCase(IMarcacionesRepositorio repo,
 			ICodigosTemporalesRepositorio codigosTemporalesRepositorio,
 			IEmpleadoRepositorio empleadoRepositorio,
 			IUbicacionRepositorio ubicacionRepositorio,
