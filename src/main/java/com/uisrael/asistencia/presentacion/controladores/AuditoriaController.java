@@ -9,15 +9,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.uisrael.asistencia.aplicacion.casosuso.entrada.IAuditoriaUseCase;
+import com.uisrael.asistencia.infraestructura.seguridad.JwtUtil;
 import com.uisrael.asistencia.presentacion.dto.request.AuditoriaRequestDto;
 import com.uisrael.asistencia.presentacion.dto.response.AuditoriaResponseDto;
 import com.uisrael.asistencia.presentacion.mapeadores.IAuditoriaDtoMapper;
 
+import io.jsonwebtoken.Claims;
 import jakarta.validation.Valid;
 
 @RestController
@@ -26,47 +29,84 @@ public class AuditoriaController {
 
 	private final IAuditoriaUseCase auditoriaUseCase;
 	private final IAuditoriaDtoMapper mapper;
+	private final JwtUtil jwtUtil;
 
 	public AuditoriaController(IAuditoriaUseCase auditoriaUseCase, IAuditoriaDtoMapper mapper) {
 		this.auditoriaUseCase = auditoriaUseCase;
 		this.mapper = mapper;
+		this.jwtUtil = jwtUtil;
+	}
+
+	private boolean noEsAdmin(String authHeader) {
+		Claims claims = jwtUtil.validarToken(authHeader.replace("Bearer ", ""));
+		String rol = claims.get("rol", String.class);
+		return !rol.equals("ADMIN");
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public AuditoriaResponseDto guardar(@Valid @RequestBody AuditoriaRequestDto requestAuditoria) {
-		return mapper.toResponseDto(auditoriaUseCase.guardar(mapper.toDomain(requestAuditoria)));
+	public ResponseEntity<AuditoriaResponseDto> guardar(@RequestHeader("Authorization") String authHeader,
+			@Valid @RequestBody AuditoriaRequestDto requestAuditoria) {
+		if (noEsAdmin(authHeader)) {
+			return ResponseEntity.status(403).build();
+		}
+		AuditoriaResponseDto creado = mapper.toResponseDto(auditoriaUseCase.guardar(mapper.toDomain(requestAuditoria)));
+		return ResponseEntity.status(HttpStatus.CREATED).body(creado);
 	}
 
 	@GetMapping
-	public List<AuditoriaResponseDto> listarTodos() {
-		return auditoriaUseCase.listarTodos().stream().map(mapper::toResponseDto).toList();
+	public ResponseEntity<List<AuditoriaResponseDto>> listarTodos(@RequestHeader("Authorization") String authHeader) {
+		if (noEsAdmin(authHeader)) {
+			return ResponseEntity.status(403).build();
+		}
+		return ResponseEntity.ok(auditoriaUseCase.listarTodos().stream().map(mapper::toResponseDto).toList());
 	}
 
 	@DeleteMapping("/{idAuditoria}")
-	public ResponseEntity<Void> eliminar(@PathVariable Long idAuditoria) {
+	public ResponseEntity<Void> eliminar(@RequestHeader("Authorization") String authHeader,
+			@PathVariable Long idAuditoria) {
+		if (noEsAdmin(authHeader)) {
+			return ResponseEntity.status(403).build();
+		}
 		auditoriaUseCase.eliminar(idAuditoria);
 		return ResponseEntity.noContent().build();
 	}
 
 	@GetMapping("/empleado/{idEmpleado}")
-	public List<AuditoriaResponseDto> buscarPorEmpleado(@PathVariable int idEmpleado) {
-		return auditoriaUseCase.buscarPorEmpleado(idEmpleado).stream().map(mapper::toResponseDto).toList();
+	public ResponseEntity<List<AuditoriaResponseDto>> buscarPorEmpleado(
+			@RequestHeader("Authorization") String authHeader, @PathVariable int idEmpleado) {
+		if (noEsAdmin(authHeader)) {
+			return ResponseEntity.status(403).build();
+		}
+		return ResponseEntity
+				.ok(auditoriaUseCase.buscarPorEmpleado(idEmpleado).stream().map(mapper::toResponseDto).toList());
 	}
 
 	@GetMapping("/tabla/{tabla}")
-	public List<AuditoriaResponseDto> buscarPorTabla(@PathVariable String tabla) {
-		return auditoriaUseCase.buscarPorTabla(tabla).stream().map(mapper::toResponseDto).toList();
+	public ResponseEntity<List<AuditoriaResponseDto>> buscarPorTabla(@RequestHeader("Authorization") String authHeader,
+			@PathVariable String tabla) {
+		if (noEsAdmin(authHeader)) {
+			return ResponseEntity.status(403).build();
+		}
+		return ResponseEntity.ok(auditoriaUseCase.buscarPorTabla(tabla).stream().map(mapper::toResponseDto).toList());
 	}
 
 	@GetMapping("/ip/{ip}")
-	public List<AuditoriaResponseDto> buscarPorIp(@PathVariable String ip) {
-		return auditoriaUseCase.buscarPorIp(ip).stream().map(mapper::toResponseDto).toList();
+	public ResponseEntity<List<AuditoriaResponseDto>> buscarPorIp(@RequestHeader("Authorization") String authHeader,
+			@PathVariable String ip) {
+		if (noEsAdmin(authHeader)) {
+			return ResponseEntity.status(403).build();
+		}
+		return ResponseEntity.ok(auditoriaUseCase.buscarPorIp(ip).stream().map(mapper::toResponseDto).toList());
 	}
 
 	@GetMapping("/accion/{accion}")
-	public List<AuditoriaResponseDto> buscarPorAccion(@PathVariable String accion) {
-		return auditoriaUseCase.buscarPorAccion(accion).stream().map(mapper::toResponseDto).toList();
+	public ResponseEntity<List<AuditoriaResponseDto>> buscarPorAccion(@RequestHeader("Authorization") String authHeader,
+			@PathVariable String accion) {
+		if (noEsAdmin(authHeader)) {
+			return ResponseEntity.status(403).build();
+		}
+		return ResponseEntity.ok(auditoriaUseCase.buscarPorAccion(accion).stream().map(mapper::toResponseDto).toList());
 	}
 
 }
