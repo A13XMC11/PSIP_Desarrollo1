@@ -31,7 +31,7 @@ public class AuditoriaController {
 	private final IAuditoriaDtoMapper mapper;
 	private final JwtUtil jwtUtil;
 
-	public AuditoriaController(IAuditoriaUseCase auditoriaUseCase, IAuditoriaDtoMapper mapper) {
+	public AuditoriaController(IAuditoriaUseCase auditoriaUseCase, IAuditoriaDtoMapper mapper, JwtUtil jwtUtil) {
 		this.auditoriaUseCase = auditoriaUseCase;
 		this.mapper = mapper;
 		this.jwtUtil = jwtUtil;
