@@ -2,7 +2,6 @@ package com.uisrael.asistencia.presentacion.dto.request;
 
 import java.sql.Date;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
