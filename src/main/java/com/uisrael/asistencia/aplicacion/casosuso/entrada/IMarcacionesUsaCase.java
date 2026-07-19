@@ -26,4 +26,8 @@ public interface IMarcacionesUsaCase {
 	List<Marcaciones> listarMarcacionesCorrectas();
 	
 	List<Marcaciones> buscarPorUbicacion(int idUbicacion);
+	
+	void solicitarMarcacion(int idEmpleado, String tipo);
+
+	Marcaciones registrarMarcacion(String token, double lat, double lng);
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ import com.uisrael.asistencia.presentacion.dto.request.EmpleadoRequestDto;
 import com.uisrael.asistencia.presentacion.dto.response.EmpleadoResponseDto;
 import com.uisrael.asistencia.presentacion.mapeadores.IEmpleadoDtoMapper;
 
+import io.jsonwebtoken.Claims;
 import jakarta.validation.Valid;
 
 @RestController
@@ -27,16 +29,25 @@ import jakarta.validation.Valid;
 public class EmpleadoController {
 	private final IEmpleadoUseCase empleadoUseCase;
 	private final IEmpleadoDtoMapper mapper;
+	private final JwtUtil jwtUtil;
+	
 
-	public EmpleadoController(IEmpleadoUseCase empleadoUseCase, IEmpleadoDtoMapper mapper) {
+	public EmpleadoController(IEmpleadoUseCase empleadoUseCase, IEmpleadoDtoMapper mapper, JwtUtil jwtUtil) {
 		super();
 		this.empleadoUseCase = empleadoUseCase;
 		this.mapper = mapper;
+		this.jwtUtil = jwtUtil;
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public EmpleadoResponseDto guardar(@Valid @RequestBody EmpleadoRequestDto requestEmpleado) {
+	public EmpleadoResponseDto guardar(@RequestHeader("Authorization") String authHeader, @Valid @RequestBody EmpleadoRequestDto requestEmpleado) {
+		Claims claims = jwtUtil.validarToken(authHeader.replace("Bearer ", ""));
+		String rol = claims.get("rol", String.class);
+		if (!rol.equals("ADMIN") && !rol.equals("SUPERVISOR")) {
+			return ResponseEntity.status(403).build();
+		}
+		
 		Empleado empleado = mapper.toDomain(requestEmpleado);
 		RolEntity rol = new RolEntity();
 		rol.setIdRol(requestEmpleado.getIdRol());

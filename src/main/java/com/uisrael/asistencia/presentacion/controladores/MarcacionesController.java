@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,10 +21,12 @@ import com.uisrael.asistencia.dominio.entidades.Marcaciones;
 import com.uisrael.asistencia.infraestructura.persistencia.jpa.CodigosTemporalesEntity;
 import com.uisrael.asistencia.infraestructura.persistencia.jpa.EmpleadoEntity;
 import com.uisrael.asistencia.infraestructura.persistencia.jpa.UbicacionEntity;
+import com.uisrael.asistencia.infraestructura.seguridad.JwtUtil;
 import com.uisrael.asistencia.presentacion.dto.request.MarcacionesRequestDto;
 import com.uisrael.asistencia.presentacion.dto.response.MarcacionesResponseDto;
 import com.uisrael.asistencia.presentacion.mapeadores.IMarcacionesDtoMapper;
 
+import io.jsonwebtoken.Claims;
 import jakarta.validation.Valid;
 
 @RestController
@@ -31,11 +35,13 @@ public class MarcacionesController {
 
 	private final IMarcacionesUsaCase marcacionesUseCase;
 	private final IMarcacionesDtoMapper mapper;
+	private final JwtUtil jwtUtil;
 
-	public MarcacionesController(IMarcacionesUsaCase marcacionesUseCase, IMarcacionesDtoMapper mapper) {
+	public MarcacionesController(IMarcacionesUsaCase marcacionesUseCase, IMarcacionesDtoMapper mapper, JwtUtil jwtUtil) {
 		super();
 		this.marcacionesUseCase = marcacionesUseCase;
 		this.mapper = mapper;
+		this.jwtUtil = jwtUtil;
 	}
 
 	@PostMapping
@@ -99,6 +105,23 @@ public class MarcacionesController {
 	@GetMapping("/ubicacion/{idUbicacion}")
 	public List<MarcacionesResponseDto> buscarPorUbicacion(@PathVariable int idUbicacion) {
 		return marcacionesUseCase.buscarPorUbicacion(idUbicacion).stream().map(mapper::toResponseDto).toList();
+	}
+
+	@PostMapping("/solicitar")
+	public ResponseEntity<Void> solicitar(@RequestHeader("Authorization") String authHeader,
+			@RequestParam String tipo) {
+		Claims claims = jwtUtil.validarToken(authHeader.replace("Bearer ", ""));
+		int idEmpleado = claims.get("idEmpleado", Integer.class);
+		marcacionesUseCase.solicitarMarcacion(idEmpleado, tipo);
+		return ResponseEntity.accepted().build();
+	}
+
+	@GetMapping("/registrar")
+	public ResponseEntity<MarcacionesResponseDto> registrar(@RequestParam String token,
+			@RequestParam double lat,
+			@RequestParam double lng) {
+		Marcaciones resultado = marcacionesUseCase.registrarMarcacion(token, lat, lng);
+		return ResponseEntity.ok(mapper.toResponseDto(resultado));
 	}
 
 }

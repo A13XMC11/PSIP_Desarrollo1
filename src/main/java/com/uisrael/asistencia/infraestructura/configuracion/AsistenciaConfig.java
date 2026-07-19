@@ -30,6 +30,7 @@ import com.uisrael.asistencia.dominio.repositorio.IMarcacionesRepositorio;
 import com.uisrael.asistencia.dominio.repositorio.IUbicacionRepositorio;
 import com.uisrael.asistencia.dominio.repositorio.IReporteDiarioRepositorio;
 import com.uisrael.asistencia.dominio.repositorio.IRolRepositorio;
+import com.uisrael.asistencia.infraestructura.correo.EmailService;
 import com.uisrael.asistencia.infraestructura.persistencia.adaptadores.AuditoriaRepositorioImpl;
 import com.uisrael.asistencia.infraestructura.persistencia.adaptadores.CodigosTempralesRepositorioImpl;
 import com.uisrael.asistencia.infraestructura.persistencia.adaptadores.EmpleadoHorarioRepositorioImpl;
@@ -57,6 +58,7 @@ import com.uisrael.asistencia.infraestructura.repositorios.IMarcacionesJpaReposi
 import com.uisrael.asistencia.infraestructura.repositorios.IUbicacionJpaRepositorio;
 import com.uisrael.asistencia.infraestructura.repositorios.IReporteDiarioJpaRepositorio;
 import com.uisrael.asistencia.infraestructura.repositorios.IRolJpaRepositorio;
+import com.uisrael.asistencia.infraestructura.seguridad.JwtUtil;
 
 
 @Configuration
@@ -90,8 +92,18 @@ public class AsistenciaConfig {
 		return new MarcacionesRepositorioImpl(jpaRepositorio, mapper);
 	}
 	@Bean
-	IMarcacionesUsaCase marcacionesUsaCase(IMarcacionesRepositorio repo) {
-		return new MarcacionesUseCaseImpl(repo);
+	IMarcacionesUsaCase marcacionesUsaCase(IMarcacionesRepositorio repo,
+			ICodigosTemporalesRepositorio codigosTemporalesRepositorio,
+			IEmpleadoRepositorio empleadoRepositorio,
+			IUbicacionRepositorio ubicacionRepositorio,
+			IEmpleadoHorarioRepositorio empleadoHorarioRepositorio,
+			IHorariosRepositorio horariosRepositorio,
+			JwtUtil jwtUtil,
+			EmailService emailService,
+			IReporteDiarioUseCase reporteDiarioUseCase) {
+		return new MarcacionesUseCaseImpl(repo, codigosTemporalesRepositorio, empleadoRepositorio,
+				ubicacionRepositorio, empleadoHorarioRepositorio, horariosRepositorio,
+				jwtUtil, emailService, reporteDiarioUseCase);
 	}
 
 	/* Horarios */
@@ -147,8 +159,11 @@ public class AsistenciaConfig {
 	}
 	
 	@Bean
-	IReporteDiarioUseCase reporteDiarioUseCase(IReporteDiarioRepositorio repo) {
-		return new ReporteDiarioUseCaseImpl(repo);
+	IReporteDiarioUseCase reporteDiarioUseCase(IReporteDiarioRepositorio repo,
+			IMarcacionesRepositorio marcacionesRepositorio,
+			IEmpleadoHorarioRepositorio empleadoHorarioRepositorio,
+			IHorariosRepositorio horariosRepositorio) {
+		return new ReporteDiarioUseCaseImpl(repo, marcacionesRepositorio, empleadoHorarioRepositorio, horariosRepositorio);
 	}
 	
 	/*Rol*/

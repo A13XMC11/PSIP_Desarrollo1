@@ -5,6 +5,7 @@ import java.util.List;
 import com.uisrael.asistencia.aplicacion.casosuso.entrada.IEmpleadoUseCase;
 import com.uisrael.asistencia.dominio.entidades.Empleado;
 import com.uisrael.asistencia.dominio.repositorio.IEmpleadoRepositorio;
+import com.uisrael.asistencia.infraestructura.seguridad.PasswordUtil;
 
 public class EmpleadoUseCaseImpl implements IEmpleadoUseCase {
 
@@ -16,7 +17,7 @@ public class EmpleadoUseCaseImpl implements IEmpleadoUseCase {
 
 	@Override
 	public Empleado guardar(Empleado nuevoEmpleado) {
-		// TODO Auto-generated method stub
+		nuevoEmpleado.setContrasenaEmpleado(PasswordUtil.hash(nuevoEmpleado.getContrasenaEmpleado()));
 		return repositorio.guardar(nuevoEmpleado);
 	}
 
