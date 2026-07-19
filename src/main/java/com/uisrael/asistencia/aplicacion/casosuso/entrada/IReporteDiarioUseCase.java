@@ -23,3 +23,4 @@ public interface IReporteDiarioUseCase {
 
 	List<ReporteDiario> listarMarcacionesIncompletas();
 }
+ 
