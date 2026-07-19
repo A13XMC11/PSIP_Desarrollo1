@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.uisrael.asistencia.aplicacion.casosuso.entrada.IEmpleadoUseCase;
 import com.uisrael.asistencia.dominio.entidades.Empleado;
 import com.uisrael.asistencia.infraestructura.persistencia.jpa.RolEntity;
+import com.uisrael.asistencia.infraestructura.seguridad.JwtUtil;
 import com.uisrael.asistencia.presentacion.dto.request.EmpleadoRequestDto;
 import com.uisrael.asistencia.presentacion.dto.response.EmpleadoResponseDto;
 import com.uisrael.asistencia.presentacion.mapeadores.IEmpleadoDtoMapper;
@@ -41,18 +42,20 @@ public class EmpleadoController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public EmpleadoResponseDto guardar(@RequestHeader("Authorization") String authHeader, @Valid @RequestBody EmpleadoRequestDto requestEmpleado) {
+	public ResponseEntity<?> guardar(@RequestHeader("Authorization") String authHeader,
+	                                   @Valid @RequestBody EmpleadoRequestDto requestEmpleado) {
 		Claims claims = jwtUtil.validarToken(authHeader.replace("Bearer ", ""));
 		String rol = claims.get("rol", String.class);
 		if (!rol.equals("ADMIN") && !rol.equals("SUPERVISOR")) {
 			return ResponseEntity.status(403).build();
 		}
-		
+
 		Empleado empleado = mapper.toDomain(requestEmpleado);
-		RolEntity rol = new RolEntity();
-		rol.setIdRol(requestEmpleado.getIdRol());
-		empleado.setFkRolEntity(rol);
-		return mapper.toResponseDto(empleadoUseCase.guardar(empleado));
+		RolEntity rolEntity = new RolEntity();
+		rolEntity.setIdRol(requestEmpleado.getIdRol());
+		empleado.setFkRolEntity(rolEntity);
+		EmpleadoResponseDto creado = mapper.toResponseDto(empleadoUseCase.guardar(empleado));
+		return ResponseEntity.status(HttpStatus.CREATED).body(creado);
 	}
 
 	@GetMapping
