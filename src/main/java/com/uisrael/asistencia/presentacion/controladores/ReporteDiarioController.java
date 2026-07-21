@@ -10,63 +10,80 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.uisrael.asistencia.aplicacion.casosuso.entrada.IReporteDiarioUseCase;
+import com.uisrael.asistencia.infraestructura.seguridad.JwtUtil;
 import com.uisrael.asistencia.presentacion.dto.request.ReporteDiarioRequestDto;
 import com.uisrael.asistencia.presentacion.dto.response.ReporteDiarioResponseDto;
 import com.uisrael.asistencia.presentacion.mapeadores.IReporteDiarioDtoMapper;
 
+import io.jsonwebtoken.Claims;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/asistencia/reporteDiario")
 public class ReporteDiarioController {
 
-    private final IReporteDiarioUseCase reporteDiarioUseCase;
-    private final IReporteDiarioDtoMapper mapper;
+	private final IReporteDiarioUseCase reporteDiarioUseCase;
+	private final IReporteDiarioDtoMapper mapper;
+	private final JwtUtil jwtUtil;
+	
 
-    public ReporteDiarioController(IReporteDiarioUseCase reporteDiarioUseCase, IReporteDiarioDtoMapper mapper) {
-        this.reporteDiarioUseCase = reporteDiarioUseCase;
-        this.mapper = mapper;
-    }
+	public ReporteDiarioController(IReporteDiarioUseCase reporteDiarioUseCase, IReporteDiarioDtoMapper mapper,
+			JwtUtil jwtUtil) {
+		super();
+		this.reporteDiarioUseCase = reporteDiarioUseCase;
+		this.mapper = mapper;
+		this.jwtUtil = jwtUtil;
+	}
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public ReporteDiarioResponseDto guardar(@Valid @RequestBody ReporteDiarioRequestDto requestReporteDiario) {
-        return mapper.toResponseDto(reporteDiarioUseCase.guardar(mapper.toDomain(requestReporteDiario)));
-    }
+	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
+	public ReporteDiarioResponseDto guardar(@Valid @RequestBody ReporteDiarioRequestDto requestReporteDiario) {
+		return mapper.toResponseDto(reporteDiarioUseCase.guardar(mapper.toDomain(requestReporteDiario)));
+	}
 
-    @GetMapping
-    public List<ReporteDiarioResponseDto> listarTodos() {
-        return reporteDiarioUseCase.listarTodos().stream().map(mapper::toResponseDto).toList();
-    }
+	@GetMapping
+	public List<ReporteDiarioResponseDto> listarTodos(@RequestHeader("Authorization") String authHeader) {
+		Claims claims = jwtUtil.validarToken(authHeader.replace("Bearer ", ""));
+		String rol = claims.get("rol", String.class);
 
-    @DeleteMapping("/{idReporteDiario}")
-    public ResponseEntity<Void> eliminar(@PathVariable int idReporteDiario) {
-        reporteDiarioUseCase.eliminar(idReporteDiario);
-        return ResponseEntity.noContent().build();
-    }
+		if (rol.equals("EMPLEADO")) {
+			int idEmpleado = claims.get("idEmpleado", Integer.class);
+			return reporteDiarioUseCase.buscarPorEmpleado(idEmpleado).stream().map(mapper::toResponseDto).toList();
+		}
+		return reporteDiarioUseCase.listarTodos().stream().map(mapper::toResponseDto).toList();
+	}
 
-    @GetMapping("/empleado/{idEmpleado}")
-    public List<ReporteDiarioResponseDto> buscarPorEmpleado(@PathVariable int idEmpleado) {
-        return reporteDiarioUseCase.buscarPorEmpleado(idEmpleado).stream().map(mapper::toResponseDto).toList();
-    }
+	@DeleteMapping("/{idReporteDiario}")
+	public ResponseEntity<Void> eliminar(@PathVariable int idReporteDiario) {
+		reporteDiarioUseCase.eliminar(idReporteDiario);
+		return ResponseEntity.noContent().build();
+	}
 
-    @GetMapping("/empleado/{idEmpleado}/fecha/{fecha}")
-    public List<ReporteDiarioResponseDto> buscarPorEmpleadoYFecha(@PathVariable int idEmpleado, @PathVariable LocalDate fecha) {
-        return reporteDiarioUseCase.buscarPorEmpleadoYFecha(idEmpleado, fecha).stream().map(mapper::toResponseDto).toList();
-    }
+	@GetMapping("/empleado/{idEmpleado}")
+	public List<ReporteDiarioResponseDto> buscarPorEmpleado(@PathVariable int idEmpleado) {
+		return reporteDiarioUseCase.buscarPorEmpleado(idEmpleado).stream().map(mapper::toResponseDto).toList();
+	}
 
-    @GetMapping("/tardanza")
-    public List<ReporteDiarioResponseDto> listarConTardanza() {
-        return reporteDiarioUseCase.listarConTardanza().stream().map(mapper::toResponseDto).toList();
-    }
+	@GetMapping("/empleado/{idEmpleado}/fecha/{fecha}")
+	public List<ReporteDiarioResponseDto> buscarPorEmpleadoYFecha(@PathVariable int idEmpleado,
+			@PathVariable LocalDate fecha) {
+		return reporteDiarioUseCase.buscarPorEmpleadoYFecha(idEmpleado, fecha).stream().map(mapper::toResponseDto)
+				.toList();
+	}
 
-    @GetMapping("/incompletas")
-    public List<ReporteDiarioResponseDto> listarIncompletas() {
-        return reporteDiarioUseCase.listarMarcacionesIncompletas().stream().map(mapper::toResponseDto).toList();
-    }
+	@GetMapping("/tardanza")
+	public List<ReporteDiarioResponseDto> listarConTardanza() {
+		return reporteDiarioUseCase.listarConTardanza().stream().map(mapper::toResponseDto).toList();
+	}
+
+	@GetMapping("/incompletas")
+	public List<ReporteDiarioResponseDto> listarIncompletas() {
+		return reporteDiarioUseCase.listarMarcacionesIncompletas().stream().map(mapper::toResponseDto).toList();
+	}
 }
