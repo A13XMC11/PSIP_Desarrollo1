@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.uisrael.asistencia.aplicacion.casosuso.entrada.IEmpleadoUseCase;
 import com.uisrael.asistencia.dominio.entidades.Empleado;
 import com.uisrael.asistencia.infraestructura.persistencia.jpa.RolEntity;
+import com.uisrael.asistencia.infraestructura.repositorios.IRolJpaRepositorio;
 import com.uisrael.asistencia.infraestructura.seguridad.JwtUtil;
 import com.uisrael.asistencia.presentacion.dto.request.EmpleadoRequestDto;
 import com.uisrael.asistencia.presentacion.dto.response.EmpleadoResponseDto;
@@ -30,13 +31,15 @@ import jakarta.validation.Valid;
 public class EmpleadoController {
 	private final IEmpleadoUseCase empleadoUseCase;
 	private final IEmpleadoDtoMapper mapper;
+	private final IRolJpaRepositorio rolJpaRepositorio;
 	private final JwtUtil jwtUtil;
-	
 
-	public EmpleadoController(IEmpleadoUseCase empleadoUseCase, IEmpleadoDtoMapper mapper, JwtUtil jwtUtil) {
+	public EmpleadoController(IEmpleadoUseCase empleadoUseCase, IEmpleadoDtoMapper mapper,
+			IRolJpaRepositorio rolJpaRepositorio, JwtUtil jwtUtil) {
 		super();
 		this.empleadoUseCase = empleadoUseCase;
 		this.mapper = mapper;
+		this.rolJpaRepositorio = rolJpaRepositorio;
 		this.jwtUtil = jwtUtil;
 	}
 
@@ -51,8 +54,7 @@ public class EmpleadoController {
 		}
 
 		Empleado empleado = mapper.toDomain(requestEmpleado);
-		RolEntity rolEntity = new RolEntity();
-		rolEntity.setIdRol(requestEmpleado.getIdRol());
+		RolEntity rolEntity = rolJpaRepositorio.findById(requestEmpleado.getIdRol()).orElseThrow(() -> new RuntimeException("Rol no encontrado"));
 		empleado.setFkRolEntity(rolEntity);
 		EmpleadoResponseDto creado = mapper.toResponseDto(empleadoUseCase.guardar(empleado));
 		return ResponseEntity.status(HttpStatus.CREATED).body(creado);
