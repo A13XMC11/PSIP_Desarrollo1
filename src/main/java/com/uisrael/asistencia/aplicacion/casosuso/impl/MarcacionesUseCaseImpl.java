@@ -1,6 +1,5 @@
 package com.uisrael.asistencia.aplicacion.casosuso.impl;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -216,7 +215,7 @@ public class MarcacionesUseCaseImpl implements IMarcacionesUsaCase {
 
 		Marcaciones nueva = new Marcaciones();
 		nueva.setTipo(tipo);
-		nueva.setFechaMarcacion(new java.sql.Date(System.currentTimeMillis()));
+		nueva.setFechaMarcacion(new java.util.Date());
 		nueva.setHoraMarcacion(horaActual);
 		nueva.setLatitud((float) lat);
 		nueva.setLongitud((float) lng);
