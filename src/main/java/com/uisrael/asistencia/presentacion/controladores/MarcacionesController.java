@@ -65,7 +65,15 @@ public class MarcacionesController {
 	}
 
 	@GetMapping
-	public List<MarcacionesResponseDto> listarTodos() {
+	public List<MarcacionesResponseDto> listarTodos(@RequestHeader("Authorization") String authHeader) {
+		Claims claims = jwtUtil.validarToken(authHeader.replace("Bearer ", ""));
+		String rol = claims.get("rol", String.class);
+
+		if (rol.equals("EMPLEADO")) {
+			int idEmpleado = claims.get("idEmpleado", Integer.class);
+			return marcacionesUseCase.buscarPorEmpleado(idEmpleado).stream().map(mapper::toResponseDto).toList();
+		}
+
 		return marcacionesUseCase.listarTodos().stream().map(mapper::toResponseDto).toList();
 	}
 
