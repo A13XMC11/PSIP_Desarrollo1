@@ -9,7 +9,6 @@ import com.uisrael.asistencia.infraestructura.persistencia.jpa.EmpleadoEntity;
 @Mapper(componentModel = "spring")
 public interface IEmpleadoJpaMapper {
 
-	@Mapping(target = "fkRolEntity", ignore = true)
 	Empleado toDomain(EmpleadoEntity entity);
 
 	@Mapping(target = "idRol", source = "fkRolEntity.idRol")
