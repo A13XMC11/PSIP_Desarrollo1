@@ -104,16 +104,16 @@ class AsistenciaApplicationTests {
 		
 		// **Reporte Diario
 		ReporteDiarioEntity nuevoReporte = new ReporteDiarioEntity();
-		nuevoReporte.setIdEmpelado(1);
+		nuevoReporte.setIdEmpleado(1);
 		nuevoReporte.setFechaReporte(LocalDate.now());
 		nuevoReporte.setHoraEntrada(LocalTime.parse("08:05"));
 		nuevoReporte.setHoraSalida(LocalTime.parse("17:00"));
 		nuevoReporte.setTardanzaReporte(true);
 		nuevoReporte.setMinutosTardanza(5);
-		nuevoReporte.setMarcacionImcompleta(false);
+		nuevoReporte.setMarcacionIncompleta(false);
 		repoReporte.save(nuevoReporte);
 		
-		System.out.println(nuevoReporte.getIdEmpelado()+" "+nuevoReporte.getFechaReporte()+" "+nuevoReporte.getHoraEntrada()+" "+nuevoReporte.getHoraSalida()+" "+nuevoReporte.isTardanzaReporte());
+		System.out.println(nuevoReporte.getIdEmpleado()+" "+nuevoReporte.getFechaReporte()+" "+nuevoReporte.getHoraEntrada()+" "+nuevoReporte.getHoraSalida()+" "+nuevoReporte.isTardanzaReporte());
 		
 		// **Auditoria
 		AuditoriaEntity nuevaAuditoria = new AuditoriaEntity();

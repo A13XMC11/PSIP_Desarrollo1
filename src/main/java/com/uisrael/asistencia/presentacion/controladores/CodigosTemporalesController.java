@@ -9,16 +9,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.uisrael.asistencia.aplicacion.casosuso.entrada.ICodigosTemporalesUseCase;
+import com.uisrael.asistencia.infraestructura.seguridad.JwtUtil;
 import com.uisrael.asistencia.presentacion.dto.request.CodigosTemporalesRequestDto;
 import com.uisrael.asistencia.presentacion.dto.response.CodigosTemporalesResponseDto;
 import com.uisrael.asistencia.presentacion.mapeadores.ICodigosTemporalesDtoMapper;
 
+import io.jsonwebtoken.Claims;
 import jakarta.validation.Valid;
 
 @RestController
@@ -26,29 +29,47 @@ import jakarta.validation.Valid;
 public class CodigosTemporalesController {
 	private final ICodigosTemporalesUseCase codigosTemporalesUseCase;
 	private final ICodigosTemporalesDtoMapper mapper;
+	private final JwtUtil jwtUtil;
 
 	public CodigosTemporalesController(ICodigosTemporalesUseCase codigosTemporalesUseCase,
-			ICodigosTemporalesDtoMapper mapper) {
+			ICodigosTemporalesDtoMapper mapper, JwtUtil jwtUtil) {
 		super();
 		this.codigosTemporalesUseCase = codigosTemporalesUseCase;
 		this.mapper = mapper;
+		this.jwtUtil = jwtUtil;
+	}
+
+	private boolean noEsAdmin(String authHeader) {
+		Claims claims = jwtUtil.validarToken(authHeader.replace("Bearer ", ""));
+		String rol = claims.get("rol", String.class);
+		return !rol.equals("ADMIN");
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public CodigosTemporalesResponseDto guardar(
+	public ResponseEntity<?> guardar(@RequestHeader("Authorization") String authHeader,
 			@Valid @RequestBody CodigosTemporalesRequestDto requestCodigosTemporales) {
-		return mapper.toResponseDto(codigosTemporalesUseCase.guardar(mapper.toDomain(requestCodigosTemporales)));
-
+		if (noEsAdmin(authHeader)) {
+			return ResponseEntity.status(403).build();
+		}
+		CodigosTemporalesResponseDto creado = mapper.toResponseDto(codigosTemporalesUseCase.guardar(mapper.toDomain(requestCodigosTemporales)));
+		return ResponseEntity.status(HttpStatus.CREATED).body(creado);
 	}
 
 	@GetMapping
-	public List<CodigosTemporalesResponseDto> listarTodos() {
-		return codigosTemporalesUseCase.listarTodos().stream().map(mapper::toResponseDto).toList();
+	public ResponseEntity<List<CodigosTemporalesResponseDto>> listarTodos(@RequestHeader("Authorization") String authHeader) {
+		if (noEsAdmin(authHeader)) {
+			return ResponseEntity.status(403).build();
+		}
+		return ResponseEntity.ok(codigosTemporalesUseCase.listarTodos().stream().map(mapper::toResponseDto).toList());
 	}
 
 	@DeleteMapping("/{idCodigosTemporales}")
-	public ResponseEntity<Void> eliminar(@PathVariable int idCodigosTemporales) {
+	public ResponseEntity<Void> eliminar(@RequestHeader("Authorization") String authHeader,
+			@PathVariable int idCodigosTemporales) {
+		if (noEsAdmin(authHeader)) {
+			return ResponseEntity.status(403).build();
+		}
 		codigosTemporalesUseCase.eliminar(idCodigosTemporales);
 		return ResponseEntity.noContent().build();
 	}
@@ -59,8 +80,12 @@ public class CodigosTemporalesController {
 	}
 
 	@GetMapping("/empleado/{idEmpleado}/activos")
-	public List<CodigosTemporalesResponseDto> buscarCodigosActivos(@PathVariable int idEmpleado) {
-		return codigosTemporalesUseCase.buscarCodigosActivosPorEmpleado(idEmpleado).stream().map(mapper::toResponseDto)
-				.toList();
+	public ResponseEntity<List<CodigosTemporalesResponseDto>> buscarCodigosActivos(@RequestHeader("Authorization") String authHeader,
+			@PathVariable int idEmpleado) {
+		if (noEsAdmin(authHeader)) {
+			return ResponseEntity.status(403).build();
+		}
+		return ResponseEntity.ok(codigosTemporalesUseCase.buscarCodigosActivosPorEmpleado(idEmpleado).stream().map(mapper::toResponseDto)
+				.toList());
 	}
 }

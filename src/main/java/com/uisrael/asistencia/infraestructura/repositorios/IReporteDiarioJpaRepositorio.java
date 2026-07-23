@@ -10,15 +10,15 @@ import com.uisrael.asistencia.infraestructura.persistencia.jpa.ReporteDiarioEnti
 
 public interface IReporteDiarioJpaRepositorio extends JpaRepository<ReporteDiarioEntity, Integer> {
 
-    @Query("Select r from ReporteDiarioEntity r where r.fkEmpleadoEntity.idEmpleado=?1")
+    @Query("Select r from ReporteDiarioEntity r where r.idEmpleado=?1")
     List<ReporteDiarioEntity> buscarPorEmpleado(int idEmpleado);
 
-    @Query("Select r from ReporteDiarioEntity r where r.fkEmpleadoEntity.idEmpleado=?1 and r.fechaReporte=?2")
+    @Query("Select r from ReporteDiarioEntity r where r.idEmpleado=?1 and r.fechaReporte=?2")
     List<ReporteDiarioEntity> buscarPorEmpleadoYFecha(int idEmpleado, LocalDate fecha);
 
     @Query("Select r from ReporteDiarioEntity r where r.tardanzaReporte=true")
     List<ReporteDiarioEntity> listarConTardanza();
 
-    @Query("Select r from ReporteDiarioEntity r where r.marcacionImcompleta=true")
+    @Query("Select r from ReporteDiarioEntity r where r.marcacionIncompleta=true")
     List<ReporteDiarioEntity> listarMarcacionesIncompletas();
 }

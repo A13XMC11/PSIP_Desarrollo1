@@ -150,8 +150,6 @@ public class MarcacionesUseCaseImpl implements IMarcacionesUsaCase {
 		if (codigo.isUsado()) {
 			throw new RuntimeException("Este link ya fue usado");
 		}
-		codigo.setUsado(true);
-		codigosTemporalesRepositorio.guardar(codigo);
 
 		// 1. Validar GPS de todas las ubicaciones activas
 		List<Ubicacion> ubicacionesActivas = ubicacionRepositorio.listarUbicacionesActivas();
@@ -243,6 +241,9 @@ public class MarcacionesUseCaseImpl implements IMarcacionesUsaCase {
 		if (tipo.equals("ENTRADA") || tipo.equals("SALIDA")) {
 			reporteDiarioUseCase.generarOActualizar(idEmpleado, LocalDate.now());
 		}
+
+		codigo.setUsado(true);
+		codigosTemporalesRepositorio.guardar(codigo);
 
 		return guardada;
 	}

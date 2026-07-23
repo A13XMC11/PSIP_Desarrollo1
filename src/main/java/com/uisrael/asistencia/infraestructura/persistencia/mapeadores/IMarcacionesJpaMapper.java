@@ -9,9 +9,9 @@ import com.uisrael.asistencia.infraestructura.persistencia.jpa.MarcacionesEntity
 @Mapper(componentModel = "spring")
 public interface IMarcacionesJpaMapper {
 
-	@Mapping(target = "fkEmpleadoEntity", ignore = true)
-	@Mapping(target = "fkCodigoEntity", ignore = true)
-	@Mapping(target = "fkUbicacionEntity", ignore = true)
+	@Mapping(target = "fkEmpleadoEntity", source = "fkEmpleadoEntity")
+	@Mapping(target = "fkCodigoEntity", source = "fkCodigoEntity")
+	@Mapping(target = "fkUbicacionEntity", source = "fkUbicacionEntity")
 	Marcaciones toDomain(MarcacionesEntity entity);
 
 	@Mapping(target = "idEmpleado", source = "fkEmpleadoEntity.idEmpleado")
